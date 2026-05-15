@@ -35,9 +35,11 @@ The frontend lives in `src` and must follow this structure:
 
 Naming rules:
 
-- Frontend file and folder names must use kebab-case.
-- Svelte components must use kebab-case filenames, for example `track-list.svelte`.
+- Frontend file and folder names must use kebab-case unless they are component modules covered by the PascalCase rule below.
+- Svelte component modules must live in a dedicated PascalCase directory with a PascalCase component file, colocated `types.ts`, `index.ts`, and `__tests__/<Component>.test.ts`. For example: `src/shared/ui/Button/Button.svelte`, `src/shared/ui/Button/types.ts`, `src/shared/ui/Button/index.ts`, and `src/shared/ui/Button/__tests__/Button.test.ts`.
+- Nested component parts must live under their parent component directory, for example `src/shared/ui/Button/ButtonLabel/ButtonLabel.svelte`.
 - TypeScript modules must use kebab-case filenames, for example `playlist-store.ts`.
+- Supporting modules in component directories, such as `index.ts` and `types.ts`, stay kebab-case or lowercase.
 - Type names, component exports, stores, and functions use normal TypeScript naming conventions inside files.
 - Cross-layer imports should move from generic to specific layers: `app` may import anything, `pages` may import widgets/features/entities/shared, `features` may import entities/shared, and `shared` must not import app-specific code.
 

@@ -1,0 +1,56 @@
+:root {
+  --ui-scale: 1;
+  --size-0: 0;
+  --size-1: calc(4px * var(--ui-scale));
+  --size-2: calc(8px * var(--ui-scale));
+  --size-3: calc(12px * var(--ui-scale));
+  --size-4: calc(16px * var(--ui-scale));
+  --size-5: calc(20px * var(--ui-scale));
+  --size-6: calc(24px * var(--ui-scale));
+  --size-8: calc(32px * var(--ui-scale));
+  --size-10: calc(40px * var(--ui-scale));
+  --size-12: calc(48px * var(--ui-scale));
+  --size-14: calc(56px * var(--ui-scale));
+  --size-16: calc(64px * var(--ui-scale));
+
+  --font-family-ui:
+    "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  --font-family-mono: "SF Mono", ui-monospace, monospace;
+  --font-size-0: calc(11px * var(--ui-scale));
+  --font-size-1: calc(12px * var(--ui-scale));
+  --font-size-2: calc(13px * var(--ui-scale));
+  --font-size-3: calc(14px * var(--ui-scale));
+  --font-size-4: calc(15px * var(--ui-scale));
+  --font-size-5: calc(16px * var(--ui-scale));
+  --font-size-6: calc(18px * var(--ui-scale));
+  --line-height-tight: 1.15;
+  --line-height-ui: 1.28;
+  --font-weight-regular: 400;
+  --font-weight-medium: 560;
+  --font-weight-semibold: 650;
+  --font-weight-bold: 720;
+
+  --radius-1: 4px;
+  --radius-2: 6px;
+  --radius-3: 8px;
+  --radius-4: 12px;
+  --radius-5: 16px;
+  --radius-pill: 999px;
+
+  --control-sm: calc(26px * var(--ui-scale));
+  --control-md: calc(30px * var(--ui-scale));
+  --control-lg: calc(36px * var(--ui-scale));
+  --icon-sm: calc(16px * var(--ui-scale));
+  --icon-md: calc(18px * var(--ui-scale));
+  --icon-lg: calc(22px * var(--ui-scale));
+  --icon-stroke: 1.25;
+
+  --border-width: 1px;
+  --duration-fast: 120ms;
+  --duration-normal: 180ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  --z-popover: 20;
+  --z-modal: 30;
+}

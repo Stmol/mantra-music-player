@@ -1,0 +1,11 @@
+.green {
+  color: var(--color-success);
+}
+
+.amber {
+  color: var(--color-warning);
+}
+
+.muted {
+  color: var(--color-text-dim);
+}

@@ -71,6 +71,22 @@ export default [
     },
   },
   {
+    files: [
+      "src/app/components/*/*.svelte",
+      "src/app/components/*/__tests__/*.test.ts",
+      "src/shared/ui/*/*.svelte",
+      "src/shared/ui/*/__tests__/*.test.ts",
+    ],
+    rules: {
+      "unicorn/filename-case": [
+        "error",
+        {
+          case: "pascalCase",
+        },
+      ],
+    },
+  },
+  {
     files: ["**/*.svelte"],
     languageOptions: {
       parserOptions: {
@@ -87,7 +103,21 @@ export default [
       "check-file/filename-naming-convention": [
         "error",
         {
-          "src/**/*.{ts,svelte,css}": "KEBAB_CASE",
+          "src/*.{ts,svelte,css}": "KEBAB_CASE",
+          "src/{entities,features,pages,widgets}/**/*.{ts,svelte,css}":
+            "KEBAB_CASE",
+          "src/app/*.{ts,svelte,css}": "KEBAB_CASE",
+          "src/app/{data,styles}/**/*.{ts,svelte,css}": "KEBAB_CASE",
+          "src/app/components/*/*.{ts,css}": "KEBAB_CASE",
+          "src/app/components/*/*.svelte": "PASCAL_CASE",
+          "src/app/components/*/__tests__/*.test.ts": "PASCAL_CASE",
+          "src/shared/*.{ts,svelte,css}": "KEBAB_CASE",
+          "src/shared/!(ui)/**/*.{ts,svelte,css}": "KEBAB_CASE",
+          "src/shared/ui/*.ts": "KEBAB_CASE",
+          "src/shared/ui/*/*.{ts,css}": "KEBAB_CASE",
+          "src/shared/ui/*/*.svelte": "PASCAL_CASE",
+          "src/shared/ui/*/__tests__/*.test.ts": "PASCAL_CASE",
+          "src/shared/ui/**/*.css": "KEBAB_CASE",
         },
         {
           ignoreMiddleExtensions: true,
@@ -96,7 +126,13 @@ export default [
       "check-file/folder-naming-convention": [
         "error",
         {
-          "src/**/": "KEBAB_CASE",
+          "src/{entities,features,pages,widgets}/**/": "KEBAB_CASE",
+          "src/app/{data,styles}/**/": "KEBAB_CASE",
+          "src/app/components/*/": "PASCAL_CASE",
+          "src/app/components/*/__tests__/": "KEBAB_CASE",
+          "src/shared/!(ui)/**/": "KEBAB_CASE",
+          "src/shared/ui/*/": "PASCAL_CASE",
+          "src/shared/ui/*/__tests__/": "KEBAB_CASE",
         },
       ],
     },
@@ -107,6 +143,15 @@ export default [
       "check-file/filename-naming-convention": "off",
       "@typescript-eslint/consistent-type-definitions": "off",
       "@typescript-eslint/triple-slash-reference": "off",
+    },
+  },
+  {
+    files: [
+      "src/app/components/*/__tests__/*.test.ts",
+      "src/shared/ui/*/__tests__/*.test.ts",
+    ],
+    rules: {
+      "check-file/folder-naming-convention": "off",
     },
   },
 ];
