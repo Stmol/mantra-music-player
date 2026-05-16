@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { CheckboxProps as CheckboxProperties } from "./types";
+  import type { RadioButtonProps as RadioButtonProperties } from "./types";
 
   // svelte-ignore custom_element_props_identifier
   let {
@@ -7,13 +7,14 @@
     class: _className,
     description,
     disabled = false,
+    group = $bindable(),
     id,
-    indeterminate = false,
     label,
     marker,
     style: _style,
+    value,
     ...rest
-  }: CheckboxProperties = $props();
+  }: RadioButtonProperties = $props();
 
   $effect(() => {
     void [_className, _style];
@@ -23,23 +24,26 @@
   const descriptionId = $derived(
     fieldId && description ? `${fieldId}-description` : undefined,
   );
-  const checkboxClass = $derived(
-    ["checkbox", _className].filter(Boolean).join(" "),
+  const radioButtonClass = $derived(
+    ["checkbox", "radio", _className].filter(Boolean).join(" "),
   );
-  const state = $derived(
-    indeterminate ? "mixed" : checked ? "checked" : "idle",
-  );
+  const state = $derived(checked || group === value ? "checked" : "idle");
 </script>
 
-<label class={checkboxClass} data-state={state} style={_style}>
+<label class={radioButtonClass} data-state={state} style={_style}>
   <input
     {...rest}
-    aria-checked={indeterminate ? "mixed" : checked}
+    aria-checked={checked || group === value}
     aria-describedby={descriptionId}
-    bind:checked
+    bind:group
+    checked={checked || group === value}
     {disabled}
     id={fieldId}
-    type="checkbox"
+    onchange={(event) => {
+      checked = event.currentTarget.checked;
+    }}
+    type="radio"
+    {value}
   />
 
   <span class="control-indicator">

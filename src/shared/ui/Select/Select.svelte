@@ -1,27 +1,24 @@
 <script lang="ts">
-  import type { TextFieldProps as TextFieldProperties } from "./types";
+  import type { SelectProps as SelectProperties } from "./types";
 
   // svelte-ignore custom_element_props_identifier
   let {
-    appearance = "default",
     class: _className,
     description,
     disabled = false,
     error,
     id,
-    inputSize: _inputSize = "md",
     label,
     leading,
+    options = [],
+    selectSize: _selectSize = "md",
     style: _style,
-    tone: _tone = "neutral",
-    trailing,
-    type = "text",
     value = $bindable(""),
     ...rest
-  }: TextFieldProperties = $props();
+  }: SelectProperties = $props();
 
   $effect(() => {
-    void [_className, _inputSize, _style, _tone];
+    void [_className, _selectSize, _style];
   });
 
   const fieldId = $derived(id ?? rest.name);
@@ -32,21 +29,19 @@
   const describedBy = $derived(
     [descriptionId, errorId].filter(Boolean).join(" "),
   );
+  const sizeClasses = {
+    lg: "select-l",
+    md: "select-m",
+    sm: "select-s",
+  } as const;
   const fieldClass = $derived(
-    [
-      "field",
-      "text-field",
-      `text-field--${_inputSize}`,
-      `text-field--${appearance}`,
-      (_tone === "danger" || error) && "text-field--danger",
-      leading && "text-field--has-leading",
-      trailing && "text-field--has-trailing",
-      disabled && "text-field--disabled",
-      rest.readonly && "text-field--readonly",
-      _className,
-    ]
+    ["field", "select-field", error && "select-field--danger", _className]
       .filter(Boolean)
       .join(" "),
+  );
+  const selectClass = $derived(["select", sizeClasses[_selectSize]].join(" "));
+  const selectedOption = $derived(
+    options.find((option) => option.value === value) ?? options[0],
   );
 </script>
 
@@ -55,28 +50,30 @@
     <span class="field__label">{label}</span>
   {/if}
 
-  <span class="field__control text-field__control">
-    {#if leading}
-      <span class="text-field__leading" aria-hidden="true">
-        {@render leading()}
-      </span>
-    {/if}
+  <span class={selectClass}>
+    <span class="select-content" aria-hidden="true">
+      {#if leading}
+        <span class="select-leading">
+          {@render leading()}
+        </span>
+      {/if}
+      <span class="select-value">{selectedOption?.label ?? ""}</span>
+    </span>
 
-    <input
+    <select
       {...rest}
       aria-describedby={describedBy || undefined}
       aria-invalid={error ? "true" : undefined}
       bind:value
       {disabled}
       id={fieldId}
-      {type}
-    />
-
-    {#if trailing}
-      <span class="text-field__trailing">
-        {@render trailing()}
-      </span>
-    {/if}
+    >
+      {#each options as option}
+        <option disabled={option.disabled} value={option.value}>
+          {option.label}
+        </option>
+      {/each}
+    </select>
   </span>
 
   {#if description}

@@ -1,42 +1,68 @@
 <script lang="ts">
+  import { IconButton } from "../IconButton";
   import type { ChipProps as ChipProperties } from "./types";
 
   // svelte-ignore custom_element_props_identifier
   let {
     children,
-    class: className = "",
-    leading,
-    selected = false,
-    size = "md",
-    tone = "neutral",
-    trailing,
+    class: _className,
+    create = false,
+    fullWidth = false,
+    removable = false,
+    style: _style,
     type = "button",
     ...rest
   }: ChipProperties = $props();
+
+  $effect(() => {
+    void _style;
+  });
+
+  const chipClass = $derived(
+    [
+      "chip",
+      create ? "create-label-btn" : "label-item",
+      fullWidth && "create-label-btn--full-width",
+      _className,
+    ]
+      .filter(Boolean)
+      .join(" "),
+  );
 </script>
 
-<button
-  {...rest}
-  aria-pressed={selected}
-  class={`ui-chip ui-chip--${tone} ui-chip--${size} ${className}`.trim()}
-  data-selected={selected || undefined}
-  {type}
->
-  {#if leading}
-    <span class="ui-chip__icon ui-chip__icon--leading" aria-hidden="true">
-      {@render leading()}
-    </span>
-  {/if}
+{#if create && !children}
+  <IconButton
+    {...rest}
+    class={chipClass}
+    icon="plus"
+    style={_style}
+    {type}
+    variant="chip-add"
+  />
+{:else}
+  <button {...rest} class={chipClass} style={_style} {type}>
+    {#if create}
+      <IconButton
+        as="span"
+        class="create-label-btn__icon"
+        icon="plus"
+        variant="chip-add"
+      />
+    {/if}
 
-  {#if children}
-    <span class="ui-chip__content">
-      {@render children()}
-    </span>
-  {/if}
+    {#if children}
+      <span class="label-item-name">
+        {@render children()}
+      </span>
+    {/if}
 
-  {#if trailing}
-    <span class="ui-chip__icon ui-chip__icon--trailing" aria-hidden="true">
-      {@render trailing()}
-    </span>
-  {/if}
-</button>
+    {#if !create && removable}
+      <IconButton
+        as="span"
+        class="label-item-remove-btn"
+        icon="close"
+        variant="chip-remove"
+      />
+    {/if}
+  </button>
+{/if}

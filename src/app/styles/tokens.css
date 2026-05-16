@@ -1,56 +1,230 @@
 :root {
-  --ui-scale: 1;
-  --size-0: 0;
-  --size-1: calc(4px * var(--ui-scale));
-  --size-2: calc(8px * var(--ui-scale));
-  --size-3: calc(12px * var(--ui-scale));
-  --size-4: calc(16px * var(--ui-scale));
-  --size-5: calc(20px * var(--ui-scale));
-  --size-6: calc(24px * var(--ui-scale));
-  --size-8: calc(32px * var(--ui-scale));
-  --size-10: calc(40px * var(--ui-scale));
-  --size-12: calc(48px * var(--ui-scale));
-  --size-14: calc(56px * var(--ui-scale));
-  --size-16: calc(64px * var(--ui-scale));
+  --timing-function-linear: linear;
+  --timing-function-ease: ease;
+  --timing-function-scale-in: cubic-bezier(0, 0.89, 0.44, 1);
+  --timing-function-scaleIn: var(--timing-function-scale-in);
+  --timing-function-scale-out: cubic-bezier(0.165, 0.84, 0.44, 1);
+  --timing-function-scaleOut: var(--timing-function-scale-out);
+  --timing-function-scale-up: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --timing-function-scaleUp: var(--timing-function-scale-up);
+  --timing-function-super: cubic-bezier(0.4, 0, 0.22, 1);
 
-  --font-family-ui:
-    "SF Pro Text", "SF Pro Display", -apple-system, BlinkMacSystemFont,
-    "Segoe UI", sans-serif;
-  --font-family-mono: "SF Mono", ui-monospace, monospace;
-  --font-size-0: calc(11px * var(--ui-scale));
-  --font-size-1: calc(12px * var(--ui-scale));
-  --font-size-2: calc(13px * var(--ui-scale));
-  --font-size-3: calc(14px * var(--ui-scale));
-  --font-size-4: calc(15px * var(--ui-scale));
-  --font-size-5: calc(16px * var(--ui-scale));
-  --font-size-6: calc(18px * var(--ui-scale));
-  --line-height-tight: 1.15;
-  --line-height-ui: 1.28;
+  --font-family-ru_RU: Arial, sans-serif;
+  --font-family-ja_JP:
+    "SF Pro Text", -apple-system, "Roboto", system-ui, "Segoe UI",
+    "Helvetica Neue", "Hiragino Sans", "Noto Sans", "Liberation Sans", Arial,
+    "Hiragino Kaku Gothic Pro", Osaka, Meiryo, "MS PGothic", "MS Gothic",
+    "Noto Sans CJK JP", TakaoPGothic, sans-serif;
+  --font-family-ko_KR:
+    "SF Pro Text", -apple-system, "Roboto", system-ui, "Segoe UI",
+    "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial,
+    "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  --font-family-zh_TW:
+    "SF Pro Text", -apple-system, "Roboto", system-ui, "Segoe UI",
+    "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, "PingFang TC",
+    "Hiragino Sans GB", "Microsoft JhengHei", "Microsoft Yahei", sans-serif;
+  --font-family-zh_CN:
+    "SF Pro Text", -apple-system, "Roboto", system-ui, "Segoe UI",
+    "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, "PingFang SC",
+    "PingFang TC", "Hiragino Sans GB", "Microsoft Yahei", sans-serif;
+  --font-family-mono:
+    "SF Mono", "Fira Mono", "Roboto Mono", "Monaco", "Consolas", monospace;
+
+  --mantra-font-family: var(--font-family-zh_CN);
+  --mantra-font-family-mono: var(--font-family-mono);
+
+  --font-size-xs: 13px;
+  --font-size-s: 14px;
+  --font-size-m: 16px;
+  --font-size-l: 18px;
+  --font-size-xl: 20px;
+  --font-size-xxl: 28px;
+  --font-size-xxxl: 38px;
+  --font-size-xxxxl: 48px;
+
+  --mantra-font-size-xs: 12px;
+  --mantra-font-size-sm: var(--font-size-xs);
+  --mantra-font-size-md: var(--font-size-s);
+  --mantra-font-size-lg: var(--font-size-m);
+  --mantra-font-size-xl: var(--font-size-l);
+  --mantra-font-size-2xl: var(--font-size-xl);
+  --mantra-font-size-3xl: var(--font-size-xxl);
+  --mantra-font-size-4xl: var(--font-size-xxxl);
+  --mantra-font-size-5xl: var(--font-size-xxxxl);
+
+  --font-weight-hairline: 100;
+  --font-weight-light: 300;
   --font-weight-regular: 400;
-  --font-weight-medium: 560;
-  --font-weight-semibold: 650;
-  --font-weight-bold: 720;
+  --font-weight-bold: 600;
+  --font-weight-utility-bold: 700;
 
-  --radius-1: 4px;
-  --radius-2: 6px;
-  --radius-3: 8px;
-  --radius-4: 12px;
-  --radius-5: 16px;
-  --radius-pill: 999px;
+  --mantra-font-weight-regular: var(--font-weight-regular);
+  --mantra-font-weight-bold: var(--font-weight-bold);
 
-  --control-sm: calc(26px * var(--ui-scale));
-  --control-md: calc(30px * var(--ui-scale));
-  --control-lg: calc(36px * var(--ui-scale));
-  --icon-sm: calc(16px * var(--ui-scale));
-  --icon-md: calc(18px * var(--ui-scale));
-  --icon-lg: calc(22px * var(--ui-scale));
-  --icon-stroke: 1.25;
+  --line-height-extra-tight: 1em;
+  --line-height-tight: 1.2em;
+  --line-height-readable: 1.7em;
+  --line-height-loose: 2em;
 
+  --spacing-xxs: 5px;
+  --spacing-xs: 10px;
+  --spacing-s: 15px;
+  --spacing-m: 20px;
+  --spacing-l: 40px;
+  --spacing-xl: 80px;
+
+  --mantra-space-2xs: 4px;
+  --mantra-space-xs: var(--spacing-xxs);
+  --mantra-space-sm: var(--spacing-xs);
+  --mantra-space-md: var(--spacing-s);
+  --mantra-space-lg: var(--spacing-m);
+  --mantra-space-xl: var(--spacing-l);
+  --mantra-space-2xl: var(--spacing-xl);
+
+  --radius-0: 0;
+  --radius-xs: 3px;
+  --radius-checkbox: 4px;
+  --radius-s: 5px;
+  --radius-button: 5px;
+  --radius-input: 5px;
+  --radius-control: 5px;
+  --radius-control-lg: 6px;
+  --radius-modal: 8px;
+  --radius-section: 10px;
+  --radius-xl: 20px;
+  --radius-rounded: 50px;
   --border-width: 1px;
-  --duration-fast: 120ms;
-  --duration-normal: 180ms;
-  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
 
-  --z-popover: 20;
-  --z-modal: 30;
+  --mantra-radius-xs: var(--radius-xs);
+  --mantra-radius-sm: var(--radius-checkbox);
+  --mantra-radius-control: var(--radius-control);
+  --mantra-radius-md: var(--radius-button);
+  --mantra-radius-lg: var(--radius-modal);
+  --mantra-radius-xl: var(--radius-section);
+  --mantra-radius-pill: var(--radius-rounded);
+
+  --mantra-section-radius: var(--radius-section);
+  --mantra-section-padding: 16px;
+  --mantra-section-gap: 6px;
+  --mantra-icon-button-size: 24px;
+  --mantra-icon-button-icon-size: 18px;
+  --mantra-radio-height: 26px;
+  --mantra-radio-padding-block: 3px;
+  --mantra-radio-padding-inline: 6px;
+  --mantra-radio-gap: 6px;
+  --mantra-radio-indicator-size: 16px;
+  --mantra-radio-indicator-dot-size: 5px;
+  --mantra-info-section-offset: var(--spacing-xs);
+  --mantra-info-section-label-height: 26px;
+  --mantra-label-container-gap: 4px;
+  --mantra-label-item-height: 26px;
+  --mantra-label-item-padding-x: 8px;
+  --mantra-label-item-action-padding: 4px;
+  --mantra-label-item-name-height: 16px;
+  --mantra-label-action-size: 18px;
+  --mantra-label-create-size: 26px;
+  --mantra-label-icon-size: 14px;
+  --mantra-label-remove-icon-inset: 2px;
+  --mantra-label-create-icon-inset: 6px;
+
+  --mantra-duration-fast: 80ms;
+  --mantra-duration-base: 200ms;
+  --mantra-duration-slow: 300ms;
+
+  --mantra-ease-linear: var(--timing-function-linear);
+  --mantra-ease-base: var(--timing-function-ease);
+  --mantra-ease-enter: var(--timing-function-scale-in);
+  --mantra-ease-exit: var(--timing-function-scale-out);
+  --mantra-ease-spring: var(--timing-function-scale-up);
+  --mantra-ease-emphasized: var(--timing-function-super);
+
+  --color-black: #000;
+  --color-black-5: rgba(0, 0, 0, calc(5 / 100));
+  --color-black-10: rgba(0, 0, 0, calc(10 / 100));
+  --color-black-15: rgba(0, 0, 0, calc(15 / 100));
+  --color-black-20: rgba(0, 0, 0, calc(20 / 100));
+  --color-black-25: rgba(0, 0, 0, calc(25 / 100));
+  --color-black-30: rgba(0, 0, 0, calc(30 / 100));
+  --color-black-35: rgba(0, 0, 0, calc(35 / 100));
+  --color-black-50: rgba(0, 0, 0, calc(50 / 100));
+
+  --color-white: #fff;
+  --color-white-5: rgba(255, 255, 255, calc(5 / 100));
+  --color-white-7: rgba(255, 255, 255, calc(7 / 100));
+  --color-white-8: rgba(255, 255, 255, calc(8 / 100));
+  --color-white-10: rgba(255, 255, 255, calc(10 / 100));
+  --color-white-15: rgba(255, 255, 255, calc(15 / 100));
+  --color-white-20: rgba(255, 255, 255, calc(20 / 100));
+  --color-white-25: rgba(255, 255, 255, calc(25 / 100));
+  --color-white-30: rgba(255, 255, 255, calc(30 / 100));
+  --color-white-50: rgba(255, 255, 255, calc(50 / 100));
+  --color-white-75: rgba(255, 255, 255, calc(75 / 100));
+  --color-white-80: rgba(255, 255, 255, calc(80 / 100));
+  --color-white-85: rgba(255, 255, 255, calc(85 / 100));
+  --color-white-90: rgba(255, 255, 255, calc(90 / 100));
+  --color-white-92: rgba(255, 255, 255, calc(92 / 100));
+  --color-white-95: rgba(255, 255, 255, calc(95 / 100));
+
+  --color-dark: #2c2f32;
+  --color-dark-5: rgba(44, 47, 50, calc(5 / 100));
+  --color-dark-10: rgba(44, 47, 50, calc(10 / 100));
+  --color-dark-15: rgba(44, 47, 50, calc(15 / 100));
+  --color-dark-25: rgba(44, 47, 50, calc(25 / 100));
+  --color-dark-30: rgba(44, 47, 50, calc(30 / 100));
+  --color-dark-60: rgba(44, 47, 50, calc(60 / 100));
+  --color-dark-70: rgba(44, 47, 50, calc(70 / 100));
+
+  --color-lightgray: #f8f9fb;
+  --color-lightgray-5: rgba(248, 249, 251, calc(5 / 100));
+  --color-lightgray-7: rgba(248, 249, 251, calc(7 / 100));
+  --color-lightgray-10: rgba(248, 249, 251, calc(10 / 100));
+  --color-lightgray-15: rgba(248, 249, 251, calc(15 / 100));
+  --color-lightgray-25: rgba(248, 249, 251, calc(25 / 100));
+  --color-lightgray-30: rgba(248, 249, 251, calc(30 / 100));
+  --color-lightgray-60: rgba(248, 249, 251, calc(60 / 100));
+  --color-lightgray-70: rgba(248, 249, 251, calc(70 / 100));
+
+  --color-brand: #0072ef;
+  --color-brand-5: rgba(0, 114, 239, calc(5 / 100));
+  --color-brand-10: rgba(0, 114, 239, calc(10 / 100));
+  --color-brand-15: rgba(0, 114, 239, calc(15 / 100));
+  --color-brand-25: rgba(0, 114, 239, calc(25 / 100));
+  --color-brand-35: rgba(0, 114, 239, calc(35 / 100));
+  --color-brand-50: rgba(0, 114, 239, calc(50 / 100));
+  --color-brand-90: rgba(0, 114, 239, calc(90 / 100));
+
+  --color-brand-lighter: #3297ff;
+  --color-brand-lighter-5: rgba(50, 151, 255, calc(5 / 100));
+  --color-brand-lighter-10: rgba(50, 151, 255, calc(10 / 100));
+  --color-brand-lighter-15: rgba(50, 151, 255, calc(15 / 100));
+  --color-brand-lighter-25: rgba(50, 151, 255, calc(25 / 100));
+  --color-brand-lighter-35: rgba(50, 151, 255, calc(35 / 100));
+  --color-brand-lighter-50: rgba(50, 151, 255, calc(50 / 100));
+  --color-brand-lighter-90: rgba(50, 151, 255, calc(90 / 100));
+
+  --color-theme-dark: #18191c;
+  --color-theme-dark-75: rgba(24, 25, 28, calc(75 / 100));
+  --color-theme-dark-80: rgba(24, 25, 28, calc(80 / 100));
+  --color-theme-dark-85: rgba(24, 25, 28, calc(85 / 100));
+  --color-theme-dark-90: rgba(24, 25, 28, calc(90 / 100));
+  --color-theme-dark-92: rgba(24, 25, 28, calc(92 / 100));
+  --color-theme-dark-95: rgba(24, 25, 28, calc(95 / 100));
+
+  --mantra-color-brand: var(--color-brand);
+  --mantra-color-brand-hover: #0066d6;
+  --mantra-color-brand-light: var(--color-brand-lighter);
+  --color-positive: #4ca950;
+  --color-negative: #ff3b30;
+  --color-warning: #f4c749;
+  --color-info: var(--color-brand);
+  --mantra-color-positive: #4ca950;
+  --mantra-color-negative: var(--color-negative);
+  --mantra-color-danger: var(--mantra-color-negative);
+  --mantra-color-danger-light: var(--mantra-color-negative);
+  --mantra-color-warning: #f4c749;
+  --mantra-color-info: var(--color-brand);
+
+  --mantra-control-height-sm: 26px;
+  --mantra-control-height-md: 44px;
+  --mantra-control-height-lg: 48px;
 }

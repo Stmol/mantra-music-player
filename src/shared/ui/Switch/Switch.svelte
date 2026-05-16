@@ -4,35 +4,58 @@
   // svelte-ignore custom_element_props_identifier
   let {
     checked = $bindable(false),
-    class: className = "",
+    class: _className,
     description,
     disabled = false,
     label,
     offIcon,
     onIcon,
+    style: _style,
     type = "button",
     ...rest
   }: SwitchProperties = $props();
+
+  $effect(() => {
+    void [_className, _style];
+  });
 
   const toggle = () => {
     if (!disabled) {
       checked = !checked;
     }
   };
+
+  const switchClass = $derived(
+    ["switch", _className].filter(Boolean).join(" "),
+  );
+  const state = $derived(checked ? "checked" : "idle");
 </script>
 
 <button
   {...rest}
   aria-checked={checked}
-  class={`ui-switch ${className}`.trim()}
-  data-state={checked ? "checked" : "unchecked"}
+  class={switchClass}
+  data-state={state}
   {disabled}
   onclick={toggle}
   role="switch"
+  style={_style}
   {type}
 >
-  <span class="ui-switch__track" aria-hidden="true">
-    <span class="ui-switch__thumb">
+  {#if label || description}
+    <span class="control__content">
+      {#if label}
+        <span class="control__label">{label}</span>
+      {/if}
+
+      {#if description}
+        <span class="control__description">{description}</span>
+      {/if}
+    </span>
+  {/if}
+
+  <span aria-hidden="true" class="switch__track">
+    <span class="switch__thumb">
       {#if checked && onIcon}
         {@render onIcon()}
       {:else if !checked && offIcon}
@@ -40,16 +63,4 @@
       {/if}
     </span>
   </span>
-
-  {#if label || description}
-    <span class="ui-switch__body">
-      {#if label}
-        <span class="ui-switch__label">{label}</span>
-      {/if}
-
-      {#if description}
-        <span class="ui-switch__description">{description}</span>
-      {/if}
-    </span>
-  {/if}
 </button>

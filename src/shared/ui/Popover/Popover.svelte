@@ -7,37 +7,46 @@
   // svelte-ignore custom_element_props_identifier
   let {
     children,
-    class: className = "",
+    class: _className,
     open = $bindable(false),
-    placement = "bottom",
+    placement: _placement = "bottom",
+    style: _style,
     trigger,
+    triggerMode = "button",
     ...rest
   }: PopoverProperties = $props();
 
-  const renderState = $derived<PopoverRenderState>({ open });
+  $effect(() => {
+    void [_className, _placement, _style];
+  });
+
   const toggle = () => {
     open = !open;
   };
+  const renderState = $derived<PopoverRenderState>({ open, toggle });
+  const popoverClass = $derived(
+    ["popover", `popover--${_placement}`, _className].filter(Boolean).join(" "),
+  );
 </script>
 
-<div
-  {...rest}
-  class={`ui-popover ui-popover--${placement} ${className}`.trim()}
-  data-state={open ? "open" : "closed"}
->
+<div {...rest} class={popoverClass} style={_style}>
   {#if trigger}
-    <button
-      aria-expanded={open}
-      class="ui-popover__trigger"
-      onclick={toggle}
-      type="button"
-    >
+    {#if triggerMode === "custom"}
       {@render trigger(renderState)}
-    </button>
+    {:else}
+      <button
+        aria-expanded={open}
+        class="popover__trigger"
+        onclick={toggle}
+        type="button"
+      >
+        {@render trigger(renderState)}
+      </button>
+    {/if}
   {/if}
 
   {#if open && children}
-    <div class="ui-popover__content" role="dialog">
+    <div class="popover-surface" role="dialog">
       {@render children(renderState)}
     </div>
   {/if}

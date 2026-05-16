@@ -1,24 +1,33 @@
 <script lang="ts">
+  import { IconButton } from "../IconButton";
   import type { ModalProps as ModalProperties } from "./types";
 
   // svelte-ignore custom_element_props_identifier
   let {
     children,
-    class: className = "",
+    class: _className,
     description,
     dismissible = true,
     footer,
     id,
     onClose,
     open = $bindable(false),
-    size = "md",
+    size: _size = "md",
+    style: _style,
     title,
     ...rest
   }: ModalProperties = $props();
 
+  $effect(() => {
+    void [_className, _size, _style];
+  });
+
   const titleId = $derived(id && title ? `${id}-title` : undefined);
   const descriptionId = $derived(
     id && description ? `${id}-description` : undefined,
+  );
+  const modalClass = $derived(
+    ["modal", `modal--${_size}`, _className].filter(Boolean).join(" "),
   );
 
   const close = () => {
@@ -32,48 +41,48 @@
 </script>
 
 {#if open}
-  <div class="ui-modal__backdrop" role="presentation" onclick={close}></div>
+  <div class="modal-overlay" role="presentation" onclick={close}></div>
   <section
     {...rest}
     aria-describedby={descriptionId}
     aria-labelledby={titleId}
     aria-modal="true"
-    class={`ui-modal ui-modal--${size} ${className}`.trim()}
+    class={modalClass}
     {id}
     role="dialog"
+    style={_style}
   >
-    <div class="ui-modal__panel">
+    <div class="modal-surface">
       {#if title || dismissible}
-        <header class="ui-modal__header">
+        <header class="modal__header">
           {#if title}
-            <h2 class="ui-modal__title" id={titleId}>{title}</h2>
+            <h2 class="modal__title" id={titleId}>{title}</h2>
           {/if}
 
           {#if dismissible}
-            <button
-              aria-label="Close modal"
-              class="ui-modal__close"
+            <IconButton
+              class="modal__close"
+              icon="close"
+              label="Close modal"
               onclick={close}
-              type="button"
-            >
-              <span aria-hidden="true">×</span>
-            </button>
+              variant="close"
+            />
           {/if}
         </header>
       {/if}
 
       {#if description}
-        <p class="ui-modal__description" id={descriptionId}>{description}</p>
+        <p class="modal__description" id={descriptionId}>{description}</p>
       {/if}
 
       {#if children}
-        <div class="ui-modal__content">
+        <div class="modal__body">
           {@render children()}
         </div>
       {/if}
 
       {#if footer}
-        <footer class="ui-modal__footer">
+        <footer class="modal__footer">
           {@render footer()}
         </footer>
       {/if}

@@ -5,6 +5,7 @@ export type PopoverPlacement = "top" | "right" | "bottom" | "left";
 
 export type PopoverRenderState = {
   open: boolean;
+  toggle: () => void;
 };
 
 export type PopoverProps = Omit<HTMLAttributes<HTMLElement>, "children"> & {
@@ -12,4 +13,5 @@ export type PopoverProps = Omit<HTMLAttributes<HTMLElement>, "children"> & {
   open?: boolean;
   placement?: PopoverPlacement;
   trigger?: Snippet<[PopoverRenderState]>;
+  triggerMode?: "button" | "custom";
 };
