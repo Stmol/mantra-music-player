@@ -9,7 +9,7 @@ export type TextFieldAppearance = "default" | "panel-header";
 
 export type TextFieldProps = Omit<
   HTMLInputAttributes,
-  "children" | "size" | "value"
+  "children" | "size" | "style" | "value"
 > & {
   appearance?: TextFieldAppearance;
   description?: string;

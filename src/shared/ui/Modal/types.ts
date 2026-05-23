@@ -3,7 +3,10 @@ import type { HTMLAttributes } from "svelte/elements";
 
 export type ModalSize = "sm" | "md" | "lg";
 
-export type ModalProps = Omit<HTMLAttributes<HTMLElement>, "children"> & {
+export type ModalProps = Omit<
+  HTMLAttributes<HTMLElement>,
+  "children" | "style"
+> & {
   children?: Snippet;
   description?: string;
   dismissible?: boolean;

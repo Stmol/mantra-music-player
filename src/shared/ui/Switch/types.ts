@@ -3,7 +3,7 @@ import type { HTMLButtonAttributes } from "svelte/elements";
 
 export type SwitchProps = Omit<
   HTMLButtonAttributes,
-  "aria-checked" | "children" | "role"
+  "aria-checked" | "children" | "role" | "style"
 > & {
   checked?: boolean;
   description?: string;

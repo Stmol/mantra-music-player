@@ -1,6 +1,6 @@
 import type { HTMLButtonAttributes } from "svelte/elements";
 
-export type IconButtonIcon = "close" | "plus";
+export type IconButtonIcon = "close" | "copy" | "plus";
 
 export type IconButtonVariant =
   | "default"
@@ -10,7 +10,10 @@ export type IconButtonVariant =
 
 export type IconButtonElement = "button" | "span";
 
-export type IconButtonProps = Omit<HTMLButtonAttributes, "children"> & {
+export type IconButtonProps = Omit<
+  HTMLButtonAttributes,
+  "children" | "style"
+> & {
   as?: IconButtonElement;
   icon: IconButtonIcon;
   label?: string;

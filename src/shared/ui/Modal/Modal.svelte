@@ -13,13 +13,12 @@
     onClose,
     open = $bindable(false),
     size: _size = "md",
-    style: _style,
     title,
     ...rest
   }: ModalProperties = $props();
 
   $effect(() => {
-    void [_className, _size, _style];
+    void [_className, _size];
   });
 
   const titleId = $derived(id && title ? `${id}-title` : undefined);
@@ -50,7 +49,6 @@
     class={modalClass}
     {id}
     role="dialog"
-    style={_style}
   >
     <div class="modal-surface">
       {#if title || dismissible}

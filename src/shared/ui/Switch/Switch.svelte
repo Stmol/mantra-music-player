@@ -10,14 +10,9 @@
     label,
     offIcon,
     onIcon,
-    style: _style,
     type = "button",
     ...rest
   }: SwitchProperties = $props();
-
-  $effect(() => {
-    void [_className, _style];
-  });
 
   const toggle = () => {
     if (!disabled) {
@@ -26,7 +21,9 @@
   };
 
   const switchClass = $derived(
-    ["switch", _className].filter(Boolean).join(" "),
+    ["switch", "fontSize-s", "fontWeight-regular", _className]
+      .filter(Boolean)
+      .join(" "),
   );
   const state = $derived(checked ? "checked" : "idle");
 </script>
@@ -39,17 +36,19 @@
   {disabled}
   onclick={toggle}
   role="switch"
-  style={_style}
   {type}
 >
   {#if label || description}
     <span class="control__content">
       {#if label}
-        <span class="control__label">{label}</span>
+        <span class="control__label fontSize-s fontWeight-regular">{label}</span
+        >
       {/if}
 
       {#if description}
-        <span class="control__description">{description}</span>
+        <span class="control__description fontSize-xs fontWeight-regular"
+          >{description}</span
+        >
       {/if}
     </span>
   {/if}

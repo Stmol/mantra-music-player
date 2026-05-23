@@ -1,0 +1,257 @@
+/*
+ * Typography utilities copied from Eagle theme CSS (_eagle/_eagle_light.css).
+ * Dark-theme overrides for differing textColor values come from _eagle/_eagle_dark.css.
+ * Reference only: do not import from _eagle/ at runtime.
+ */
+
+.textColor-black {
+  color: #1a1b1d;
+}
+
+.textColor-grey-100 {
+  color: #e9eaf0;
+}
+
+.textColor-grey-200 {
+  color: #cacddc;
+}
+
+.textColor-grey-300 {
+  color: #acb0c7;
+}
+
+.textColor-grey-400 {
+  color: #8d93b3;
+}
+
+.textColor-grey-500 {
+  color: #6e769f;
+}
+
+.textColor-grey-600 {
+  color: #575e83;
+}
+
+.textColor-grey-700 {
+  color: #434864;
+}
+
+.textColor-grey-800 {
+  color: #2e3246;
+}
+
+.textColor-grey-900 {
+  color: #1a1c27;
+}
+
+.textColor-primary {
+  color: #0072ef;
+}
+
+.textColor-primary-dark {
+  color: #005abc;
+}
+
+.textColor-primary-light {
+  color: #238cff;
+}
+
+.textColor-secondary {
+  color: #14486f;
+}
+
+.textColor-secondary-dark {
+  color: #0c2c44;
+}
+
+.textColor-secondary-light {
+  color: #1c649a;
+}
+
+.textColor-slate {
+  color: #373a3d;
+}
+
+.textColor-sliver {
+  color: #86878d;
+}
+
+.textColor-smoke {
+  color: #dcdcdc;
+}
+
+.textColor-smoke-dark {
+  color: #cfcfcf;
+}
+
+.textColor-smoke-extra-dark {
+  color: #c3c3c3;
+}
+
+.textColor-snow {
+  color: #f4f4f6;
+}
+
+.textColor-snow-dark {
+  color: #e6e6eb;
+}
+
+.textColor-snow-extra-dark {
+  color: #d8d8df;
+}
+
+.textColor-steel {
+  color: #43484d;
+}
+
+.textColor-third {
+  color: #a3c42f;
+}
+
+.textColor-third-dark {
+  color: #819b25;
+}
+
+.textColor-third-light {
+  color: #b8d551;
+}
+
+.textColor-ui-negative {
+  color: #ff5a7b;
+}
+
+.textColor-ui-positive {
+  color: #4ca950;
+}
+
+.textColor-ui-primary {
+  color: #0072ef;
+}
+
+.textColor-ui-warning {
+  color: #f4c749;
+}
+
+.textColor-white {
+  color: #fff;
+}
+
+.font-mono {
+  font-family:
+    "Fira Mono", "Roboto Mono", "Monaco", "Consolas", monospace !important;
+}
+
+.fontFamily-fira {
+  font-family:
+    "Fira Code", "PingFang TC", "PingFang SC", "STHeiti", "微軟正黑體",
+    "Microsoft Yahei", sans-serif;
+}
+
+.fontFamily-lato {
+  font-family:
+    "Lato", "PingFang TC", "PingFang SC", "STHeiti", "微軟正黑體",
+    "Microsoft Yahei", sans-serif;
+}
+
+.fontSize-l {
+  font-size: 18px;
+}
+
+.fontSize-m {
+  font-size: 16px;
+}
+
+.fontSize-s {
+  font-size: 14px;
+}
+
+.fontSize-xl {
+  font-size: 20px;
+}
+
+.fontSize-xs {
+  font-size: 13px;
+}
+
+.fontSize-xxl {
+  font-size: 28px;
+}
+
+.fontSize-xxxl {
+  font-size: 38px;
+}
+
+.fontSize-xxxxl {
+  font-size: 48px;
+}
+
+.fontWeight-bold {
+  font-weight: 700;
+}
+
+.fontWeight-hairline {
+  font-weight: 100;
+}
+
+.fontWeight-light {
+  font-weight: 300;
+}
+
+.fontWeight-regular {
+  font-weight: 400;
+}
+
+.lineHieght-extraTight {
+  line-height: 1em;
+}
+
+.lineHieght-loose {
+  line-height: 2em;
+}
+
+.lineHieght-readable {
+  line-height: 1.7em;
+}
+
+.lineHieght-tight {
+  line-height: 1.2em;
+}
+
+.textAlign-center {
+  text-align: center;
+}
+
+.textAlign-left {
+  text-align: left;
+}
+
+.textAlign-right {
+  text-align: right;
+}
+
+.textTransform-capitalize {
+  text-transform: capitalize;
+}
+
+.textTransform-lowercase {
+  text-transform: lowercase;
+}
+
+.textTransform-uppercase {
+  text-transform: uppercase;
+}
+
+html[data-theme="dark"] .textColor-black,
+body[theme="dark"] .textColor-black {
+  color: #18191c;
+}
+
+html[data-theme="dark"] .textColor-slate,
+body[theme="dark"] .textColor-slate {
+  color: #34363d;
+}
+
+html[data-theme="dark"] .textColor-ui-negative,
+body[theme="dark"] .textColor-ui-negative {
+  color: #f23459;
+}

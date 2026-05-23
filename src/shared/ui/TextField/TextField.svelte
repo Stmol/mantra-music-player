@@ -12,7 +12,6 @@
     inputSize: _inputSize = "md",
     label,
     leading,
-    style: _style,
     tone: _tone = "neutral",
     trailing,
     type = "text",
@@ -21,7 +20,7 @@
   }: TextFieldProperties = $props();
 
   $effect(() => {
-    void [_className, _inputSize, _style, _tone];
+    void [_className, _inputSize, _tone];
   });
 
   const fieldId = $derived(id ?? rest.name);
@@ -50,9 +49,9 @@
   );
 </script>
 
-<label class={fieldClass} style={_style}>
+<label class={fieldClass}>
   {#if label}
-    <span class="field__label">{label}</span>
+    <span class="field__label fontSize-xs fontWeight-regular">{label}</span>
   {/if}
 
   <span class="field__control text-field__control">
@@ -67,6 +66,7 @@
       aria-describedby={describedBy || undefined}
       aria-invalid={error ? "true" : undefined}
       bind:value
+      class="fontSize-xs fontWeight-regular"
       {disabled}
       id={fieldId}
       {type}
@@ -80,10 +80,15 @@
   </span>
 
   {#if description}
-    <span class="field__description" id={descriptionId}>{description}</span>
+    <span
+      class="field__description fontSize-xs fontWeight-regular"
+      id={descriptionId}>{description}</span
+    >
   {/if}
 
   {#if error}
-    <span class="field__error" id={errorId}>{error}</span>
+    <span class="field__error fontSize-xs fontWeight-regular" id={errorId}
+      >{error}</span
+    >
   {/if}
 </label>

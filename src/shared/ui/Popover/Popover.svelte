@@ -10,14 +10,14 @@
     class: _className,
     open = $bindable(false),
     placement: _placement = "bottom",
-    style: _style,
+    surfaceSize = "default",
     trigger,
     triggerMode = "button",
     ...rest
   }: PopoverProperties = $props();
 
   $effect(() => {
-    void [_className, _placement, _style];
+    void [_className, _placement];
   });
 
   const toggle = () => {
@@ -27,9 +27,17 @@
   const popoverClass = $derived(
     ["popover", `popover--${_placement}`, _className].filter(Boolean).join(" "),
   );
+  const surfaceClass = $derived(
+    [
+      "popover-surface",
+      surfaceSize !== "default" && `popover-surface--${surfaceSize}`,
+    ]
+      .filter(Boolean)
+      .join(" "),
+  );
 </script>
 
-<div {...rest} class={popoverClass} style={_style}>
+<div {...rest} class={popoverClass}>
   {#if trigger}
     {#if triggerMode === "custom"}
       {@render trigger(renderState)}
@@ -46,7 +54,7 @@
   {/if}
 
   {#if open && children}
-    <div class="popover-surface" role="dialog">
+    <div class={surfaceClass} role="dialog">
       {@render children(renderState)}
     </div>
   {/if}

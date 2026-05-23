@@ -5,30 +5,24 @@ export type ButtonVariant =
   | "primary"
   | "secondary"
   | "ghost"
+  | "text"
   | "danger"
   | "grey"
   | "white"
-  | "orange"
-  | "third"
   | "positive"
   | "negative"
-  | "warning"
-  | "facebook"
-  | "twitter"
-  | "light-gray";
+  | "warning";
 
 export type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
 
 export type ButtonHoverVariant =
   | "grey"
   | "primary"
-  | "secondary"
-  | "third"
   | "positive"
   | "negative"
   | "warning";
 
-export type ButtonProps = Omit<HTMLButtonAttributes, "children"> & {
+export type ButtonProps = Omit<HTMLButtonAttributes, "children" | "style"> & {
   block?: boolean;
   children?: Snippet;
   ghost?: boolean;

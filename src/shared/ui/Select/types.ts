@@ -2,6 +2,7 @@ import type { Snippet } from "svelte";
 import type { HTMLSelectAttributes } from "svelte/elements";
 
 export type SelectSize = "sm" | "md" | "lg";
+export type SelectControlWidth = "sm" | "md" | "lg";
 
 export type SelectOption = {
   disabled?: boolean;
@@ -11,13 +12,14 @@ export type SelectOption = {
 
 export type SelectProps = Omit<
   HTMLSelectAttributes,
-  "children" | "size" | "value"
+  "children" | "size" | "style" | "value"
 > & {
   description?: string;
   error?: string;
   label?: string;
   leading?: Snippet;
   options?: SelectOption[];
+  controlWidth?: SelectControlWidth;
   selectSize?: SelectSize;
   value?: string;
 };

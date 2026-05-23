@@ -5,7 +5,7 @@ export type RadioButtonValue = string | number;
 
 export type RadioButtonProps = Omit<
   HTMLInputAttributes,
-  "checked" | "children" | "type" | "value"
+  "checked" | "children" | "style" | "type" | "value"
 > & {
   checked?: boolean;
   description?: string;

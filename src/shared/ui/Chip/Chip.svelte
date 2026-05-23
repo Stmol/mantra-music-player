@@ -9,18 +9,16 @@
     create = false,
     fullWidth = false,
     removable = false,
-    style: _style,
     type = "button",
     ...rest
   }: ChipProperties = $props();
 
-  $effect(() => {
-    void _style;
-  });
-
   const chipClass = $derived(
     [
       "chip",
+      "fontSize-xs",
+      "fontWeight-regular",
+      "lineHieght-extraTight",
       create ? "create-label-btn" : "label-item",
       fullWidth && "create-label-btn--full-width",
       _className,
@@ -35,12 +33,11 @@
     {...rest}
     class={chipClass}
     icon="plus"
-    style={_style}
     {type}
     variant="chip-add"
   />
 {:else}
-  <button {...rest} class={chipClass} style={_style} {type}>
+  <button {...rest} class={chipClass} {type}>
     {#if create}
       <IconButton
         as="span"

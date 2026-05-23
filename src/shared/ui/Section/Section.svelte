@@ -7,14 +7,9 @@
     class: _className,
     description,
     disabled = false,
-    style: _style,
     title,
     ...rest
   }: SectionProperties = $props();
-
-  $effect(() => {
-    void _style;
-  });
 
   const sectionClass = $derived(
     ["section-surface", disabled && "section-surface--disabled", _className]
@@ -27,16 +22,17 @@
   {...rest}
   class={sectionClass}
   data-disabled={disabled ? "true" : undefined}
-  style={_style}
 >
   {#if title || description}
     <header>
       {#if title}
-        <h2>{title}</h2>
+        <h2 class="fontSize-xs fontWeight-bold lineHieght-extraTight">
+          {title}
+        </h2>
       {/if}
 
       {#if description}
-        <p>{description}</p>
+        <p class="fontSize-xs fontWeight-regular">{description}</p>
       {/if}
     </header>
   {/if}

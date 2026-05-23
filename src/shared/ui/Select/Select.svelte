@@ -11,14 +11,14 @@
     label,
     leading,
     options = [],
+    controlWidth,
     selectSize: _selectSize = "md",
-    style: _style,
     value = $bindable(""),
     ...rest
   }: SelectProperties = $props();
 
   $effect(() => {
-    void [_className, _selectSize, _style];
+    void [_className, _selectSize, controlWidth];
   });
 
   const fieldId = $derived(id ?? rest.name);
@@ -35,7 +35,13 @@
     sm: "select-s",
   } as const;
   const fieldClass = $derived(
-    ["field", "select-field", error && "select-field--danger", _className]
+    [
+      "field",
+      "select-field",
+      error && "select-field--danger",
+      controlWidth && `select-field--width-${controlWidth}`,
+      _className,
+    ]
       .filter(Boolean)
       .join(" "),
   );
@@ -45,12 +51,12 @@
   );
 </script>
 
-<label class={fieldClass} style={_style}>
+<label class={fieldClass}>
   {#if label}
-    <span class="field__label">{label}</span>
+    <span class="field__label fontSize-xs fontWeight-regular">{label}</span>
   {/if}
 
-  <span class={selectClass}>
+  <span class={`${selectClass} fontSize-xs fontWeight-regular`}>
     <span class="select-content" aria-hidden="true">
       {#if leading}
         <span class="select-leading">
@@ -77,10 +83,15 @@
   </span>
 
   {#if description}
-    <span class="field__description" id={descriptionId}>{description}</span>
+    <span
+      class="field__description fontSize-xs fontWeight-regular"
+      id={descriptionId}>{description}</span
+    >
   {/if}
 
   {#if error}
-    <span class="field__error" id={errorId}>{error}</span>
+    <span class="field__error fontSize-xs fontWeight-regular" id={errorId}
+      >{error}</span
+    >
   {/if}
 </label>

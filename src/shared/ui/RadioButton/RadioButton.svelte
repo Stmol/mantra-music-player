@@ -11,26 +11,23 @@
     id,
     label,
     marker,
-    style: _style,
     value,
     ...rest
   }: RadioButtonProperties = $props();
-
-  $effect(() => {
-    void [_className, _style];
-  });
 
   const fieldId = $derived(id ?? rest.name);
   const descriptionId = $derived(
     fieldId && description ? `${fieldId}-description` : undefined,
   );
   const radioButtonClass = $derived(
-    ["checkbox", "radio", _className].filter(Boolean).join(" "),
+    ["checkbox", "radio", "fontSize-s", "fontWeight-regular", _className]
+      .filter(Boolean)
+      .join(" "),
   );
   const state = $derived(checked || group === value ? "checked" : "idle");
 </script>
 
-<label class={radioButtonClass} data-state={state} style={_style}>
+<label class={radioButtonClass} data-state={state}>
   <input
     {...rest}
     aria-checked={checked || group === value}
@@ -54,11 +51,14 @@
 
   <span class="control__content">
     {#if label}
-      <span class="control__label">{label}</span>
+      <span class="control__label fontSize-s fontWeight-regular">{label}</span>
     {/if}
 
     {#if description}
-      <span class="control__description" id={descriptionId}>
+      <span
+        class="control__description fontSize-xs fontWeight-regular"
+        id={descriptionId}
+      >
         {description}
       </span>
     {/if}

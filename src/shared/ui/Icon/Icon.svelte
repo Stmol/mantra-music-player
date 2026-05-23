@@ -14,27 +14,17 @@
 </script>
 
 {#if name === "bookmark"}
-  <Bookmark
-    aria-hidden="true"
-    class="mantra-icon"
-    size={20}
-    strokeWidth={1.2}
-  />
+  <Bookmark aria-hidden="true" class="mantra-icon" />
 {:else if name === "copy"}
-  <Copy aria-hidden="true" class="mantra-icon" size={20} strokeWidth={1.2} />
+  <Copy aria-hidden="true" class="mantra-icon" />
 {:else if name === "filter"}
-  <Funnel aria-hidden="true" class="mantra-icon" size={20} strokeWidth={1.2} />
+  <Funnel aria-hidden="true" class="mantra-icon" />
 {:else if name === "grid"}
-  <Grid2X2 aria-hidden="true" class="mantra-icon" size={20} strokeWidth={1.2} />
+  <Grid2X2 aria-hidden="true" class="mantra-icon" />
 {:else if name === "search"}
-  <Search aria-hidden="true" class="mantra-icon" size={20} strokeWidth={1.2} />
+  <Search aria-hidden="true" class="mantra-icon" />
 {:else if name === "sort-asc"}
-  <SortAsc aria-hidden="true" class="mantra-icon" size={20} strokeWidth={1.2} />
+  <SortAsc aria-hidden="true" class="mantra-icon" />
 {:else if name === "sort-desc"}
-  <SortDesc
-    aria-hidden="true"
-    class="mantra-icon"
-    size={20}
-    strokeWidth={1.2}
-  />
+  <SortDesc aria-hidden="true" class="mantra-icon" />
 {/if}

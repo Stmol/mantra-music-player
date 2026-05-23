@@ -14,7 +14,6 @@
     pressed,
     rounded = false,
     size = "md",
-    style: _style,
     trailing,
     type = "button",
     variant = "secondary",
@@ -22,10 +21,10 @@
   }: ButtonProperties = $props();
 
   const sizeClasses = {
-    lg: "button-m",
-    md: "button-s",
-    sm: "button-xs",
-    xl: "button-l",
+    lg: "button-lg",
+    md: "button-md",
+    sm: "button-sm",
+    xl: "button-xl",
     xs: "button-xs",
   } as const;
 
@@ -36,15 +35,16 @@
         ? "ghost-action"
         : variant === "secondary"
           ? "grey"
-          : variant === "light-gray"
-            ? "ligth-gray"
-            : variant,
+          : variant,
   );
   const isGhost = $derived(ghost);
   const sizeClass = $derived(sizeClasses[size]);
   const buttonClass = $derived(
     [
       "button",
+      "fontSize-s",
+      "fontWeight-regular",
+      "lineHieght-extraTight",
       `button-${resolvedVariant}`,
       sizeClass,
       isGhost && "button-ghost",
@@ -67,23 +67,22 @@
   aria-pressed={pressed}
   class={buttonClass}
   disabled={disabled || loading}
-  style={_style}
   {type}
 >
   {#if leading}
-    <span aria-hidden="true">
+    <span aria-hidden="true" class="button__slot">
       {@render leading()}
     </span>
   {/if}
 
   {#if children}
-    <span>
+    <span class="button__label">
       {@render children()}
     </span>
   {/if}
 
   {#if trailing}
-    <span aria-hidden="true">
+    <span aria-hidden="true" class="button__slot">
       {@render trailing()}
     </span>
   {/if}

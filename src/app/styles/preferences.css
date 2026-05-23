@@ -1,0 +1,293 @@
+.preferences-modal .modal-surface {
+  width: calc(100vw - 16px);
+  max-width: none;
+  height: calc(100vh - 16px);
+  max-height: none;
+  padding: 0;
+  gap: 0;
+}
+
+.preferences-modal .modal__body {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.preferences-modal__layout {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  min-height: 0;
+  height: 100%;
+}
+
+.preferences-modal .panel-sidebar {
+  display: flex;
+  flex-direction: column;
+  min-width: 260px;
+  width: 260px;
+  box-shadow: -1px 0 0 inset var(--color-border-secondary);
+  overflow: auto;
+  padding: 24px 18px 0;
+  box-sizing: border-box;
+  gap: 10px;
+  background-color: var(--color-bg-hover);
+}
+
+.preferences-modal__sidebar-header {
+  display: flex;
+  align-items: center;
+  height: 36px;
+}
+
+.preferences-modal__sidebar-header h2 {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: 24px;
+  font-weight: var(--font-weight-bold);
+  line-height: 36px;
+}
+
+.preferences-modal .panel-sidebar .text-field {
+  gap: 0;
+}
+
+.preferences-modal .panel-sidebar .text-field__control input {
+  height: 32px;
+  border-radius: 6px;
+  font-size: var(--font-size-xs);
+  line-height: 32px;
+}
+
+.preferences-modal .panel-sidebar .text-field__leading {
+  left: 10px;
+}
+
+.preferences-modal .panel-sidebar .text-field--has-leading input {
+  padding-left: 36px;
+}
+
+.preferences-modal .panel-sidebar .panel-sidebar-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 6px;
+  box-sizing: border-box;
+  background-color: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.preferences-modal .panel-sidebar .panel-sidebar-item .icon {
+  position: relative;
+  width: 20px;
+  min-width: 20px;
+  height: 20px;
+  margin-right: 12px;
+}
+
+.preferences-modal .panel-sidebar .panel-sidebar-item .icon::before {
+  position: absolute;
+  inset: 3px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  content: "";
+  opacity: 0.7;
+}
+
+.preferences-modal .panel-sidebar .panel-sidebar-item .icon::after {
+  position: absolute;
+  inset: 8px;
+  border-radius: 50%;
+  background-color: currentColor;
+  content: "";
+  opacity: 0.7;
+}
+
+html[data-theme="dark"]
+  .preferences-modal
+  .panel-sidebar
+  .panel-sidebar-item:hover,
+body[theme="dark"] .preferences-modal .panel-sidebar .panel-sidebar-item:hover {
+  background-color: var(--color-lightgray-5);
+}
+
+html[data-theme="light"]
+  .preferences-modal
+  .panel-sidebar
+  .panel-sidebar-item:hover,
+body[theme="light"]
+  .preferences-modal
+  .panel-sidebar
+  .panel-sidebar-item:hover {
+  background-color: var(--color-dark-5);
+}
+
+html[data-theme="dark"]
+  .preferences-modal
+  .panel-sidebar
+  .panel-sidebar-item.active,
+body[theme="dark"]
+  .preferences-modal
+  .panel-sidebar
+  .panel-sidebar-item.active {
+  background-color: var(--color-lightgray-10);
+}
+
+html[data-theme="light"]
+  .preferences-modal
+  .panel-sidebar
+  .panel-sidebar-item.active,
+body[theme="light"]
+  .preferences-modal
+  .panel-sidebar
+  .panel-sidebar-item.active {
+  background-color: var(--color-dark-10);
+}
+
+.preferences-modal .panel-sidebar .panel-sidebar-item .name {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-m);
+  white-space: nowrap;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 24px;
+}
+
+.preferences-modal__main {
+  display: grid;
+  grid-template-rows: 64px minmax(0, 1fr) 72px;
+  min-width: 0;
+  min-height: 0;
+}
+
+.preferences-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  border-bottom: 1px solid var(--color-border-secondary);
+}
+
+.preferences-modal__header h2 {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: 24px;
+  font-weight: var(--font-weight-bold);
+  line-height: 36px;
+}
+
+.preferences-modal__content {
+  display: grid;
+  align-content: start;
+  gap: 24px;
+  min-height: 0;
+  overflow: auto;
+  padding: 32px 32px 24px;
+}
+
+.preferences-modal__content .section-surface {
+  gap: 12px;
+}
+
+.preferences-modal__content .section-surface > header h2 {
+  font-size: var(--font-size-m);
+  line-height: 24px;
+}
+
+.preferences-modal__content .section-surface__panel {
+  padding: 0 24px;
+}
+
+.preferences-modal__content .section-surface__body > .checkbox {
+  min-height: 64px;
+}
+
+.preferences-modal__setting-row {
+  display: flex;
+  align-items: center;
+  min-height: 56px;
+  gap: 16px;
+}
+
+.preferences-modal__setting-label {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-m);
+  font-weight: var(--font-weight-bold);
+  line-height: 24px;
+}
+
+.preferences-modal__setting-row .select-field {
+  margin-left: auto;
+}
+
+.preferences-modal__setting-row .select {
+  height: 32px;
+}
+
+.preferences-modal__setting-row .select .select-content {
+  border-color: transparent;
+  background-color: transparent;
+  padding-left: 8px;
+}
+
+.preferences-modal__setting-select {
+  width: 220px;
+}
+
+.preferences-modal__inline-select {
+  width: 160px;
+}
+
+.preferences-modal__separator {
+  height: 1px;
+  background-color: var(--color-border-secondary);
+}
+
+.preferences-modal__setting-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.preferences-modal__setting-grid
+  .preferences-modal__setting-row
+  + .preferences-modal__setting-row {
+  padding-left: 24px;
+  border-left: 1px solid var(--color-border-secondary);
+}
+
+.preferences-modal__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 0 24px;
+  border-top: 1px solid var(--color-border-secondary);
+}
+
+@media (max-width: 760px) {
+  .preferences-modal__layout {
+    grid-template-columns: 220px minmax(0, 1fr);
+  }
+
+  .preferences-modal .panel-sidebar {
+    min-width: 220px;
+    width: 220px;
+  }
+
+  .preferences-modal__setting-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .preferences-modal__setting-grid
+    .preferences-modal__setting-row
+    + .preferences-modal__setting-row {
+    padding-left: 0;
+    border-left: 0;
+    border-top: 1px solid var(--color-border-secondary);
+  }
+}
