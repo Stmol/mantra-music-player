@@ -14,17 +14,17 @@
 </script>
 
 {#if name === "bookmark"}
-  <Bookmark aria-hidden="true" class="mantra-icon" />
+  <Bookmark aria-hidden="true" />
 {:else if name === "copy"}
-  <Copy aria-hidden="true" class="mantra-icon" />
+  <Copy aria-hidden="true" />
 {:else if name === "filter"}
-  <Funnel aria-hidden="true" class="mantra-icon" />
+  <Funnel aria-hidden="true" />
 {:else if name === "grid"}
-  <Grid2X2 aria-hidden="true" class="mantra-icon" />
+  <Grid2X2 aria-hidden="true" />
 {:else if name === "search"}
-  <Search aria-hidden="true" class="mantra-icon" />
+  <Search aria-hidden="true" />
 {:else if name === "sort-asc"}
-  <SortAsc aria-hidden="true" class="mantra-icon" />
+  <SortAsc aria-hidden="true" />
 {:else if name === "sort-desc"}
-  <SortDesc aria-hidden="true" class="mantra-icon" />
+  <SortDesc aria-hidden="true" />
 {/if}

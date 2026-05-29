@@ -4,7 +4,6 @@
   // svelte-ignore custom_element_props_identifier
   let {
     activeValue = $bindable<TabsValue | undefined>(),
-    class: _className,
     items,
     onValueChange,
     panelId,
@@ -19,26 +18,19 @@
     }
   });
 
-  const tabsClass = $derived(
-    ["tabs", "popover-tabs", _className].filter(Boolean).join(" "),
-  );
-
   const selectTab = (value: TabsValue) => {
     activeValue = value;
     onValueChange?.(value);
   };
 </script>
 
-<nav {...rest} aria-label={rest["aria-label"] ?? "Tabs"} class={tabsClass}>
-  <div class="popover-tabs__list" role="tablist">
+<nav {...rest} aria-label={rest["aria-label"] ?? "Tabs"}>
+  <div role="tablist">
     {#each items as item}
       {@const selected = item.value === activeValue}
       <button
         aria-controls={panelId}
         aria-selected={selected}
-        class={["tab", "popover-tabs__tab", "fontSize-xs", selected && "active"]
-          .filter(Boolean)
-          .join(" ")}
         disabled={item.disabled}
         id={`${tabIdPrefix}-${item.value}`}
         onclick={() => selectTab(item.value)}
@@ -52,7 +44,7 @@
   </div>
 
   {#if trailing}
-    <div class="popover-tabs__trailing">
+    <div>
       {@render trailing()}
     </div>
   {/if}

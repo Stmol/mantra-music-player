@@ -4,7 +4,6 @@
   // svelte-ignore custom_element_props_identifier
   let {
     appearance = "default",
-    class: _className,
     description,
     disabled = false,
     error,
@@ -20,7 +19,7 @@
   }: TextFieldProperties = $props();
 
   $effect(() => {
-    void [_className, _inputSize, _tone];
+    void [_inputSize, _tone, appearance];
   });
 
   const fieldId = $derived(id ?? rest.name);
@@ -31,32 +30,16 @@
   const describedBy = $derived(
     [descriptionId, errorId].filter(Boolean).join(" "),
   );
-  const fieldClass = $derived(
-    [
-      "field",
-      "text-field",
-      `text-field--${_inputSize}`,
-      `text-field--${appearance}`,
-      (_tone === "danger" || error) && "text-field--danger",
-      leading && "text-field--has-leading",
-      trailing && "text-field--has-trailing",
-      disabled && "text-field--disabled",
-      rest.readonly && "text-field--readonly",
-      _className,
-    ]
-      .filter(Boolean)
-      .join(" "),
-  );
 </script>
 
-<label class={fieldClass}>
+<label>
   {#if label}
-    <span class="field__label fontSize-xs fontWeight-regular">{label}</span>
+    <span>{label}</span>
   {/if}
 
-  <span class="field__control text-field__control">
+  <span>
     {#if leading}
-      <span class="text-field__leading" aria-hidden="true">
+      <span aria-hidden="true">
         {@render leading()}
       </span>
     {/if}
@@ -66,29 +49,23 @@
       aria-describedby={describedBy || undefined}
       aria-invalid={error ? "true" : undefined}
       bind:value
-      class="fontSize-xs fontWeight-regular"
       {disabled}
       id={fieldId}
       {type}
     />
 
     {#if trailing}
-      <span class="text-field__trailing">
+      <span>
         {@render trailing()}
       </span>
     {/if}
   </span>
 
   {#if description}
-    <span
-      class="field__description fontSize-xs fontWeight-regular"
-      id={descriptionId}>{description}</span
-    >
+    <span id={descriptionId}>{description}</span>
   {/if}
 
   {#if error}
-    <span class="field__error fontSize-xs fontWeight-regular" id={errorId}
-      >{error}</span
-    >
+    <span id={errorId}>{error}</span>
   {/if}
 </label>

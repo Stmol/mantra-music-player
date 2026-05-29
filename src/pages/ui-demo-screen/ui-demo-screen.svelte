@@ -1,868 +1,439 @@
 <script lang="ts">
   import {
-    Button,
-    Checkbox,
-    Chip,
-    Icon,
-    IconButton,
-    IconTabs,
-    Modal,
-    Popover,
-    RadioButton,
-    Section,
-    Select,
-    Switch,
-    Tabs,
-    TextField,
-    Tooltip,
-  } from "../../shared/ui";
-  import type { IconTabsItem } from "../../shared/ui";
+    Activity,
+    Album,
+    AudioLines,
+    CircleDot,
+    Clock3,
+    Database,
+    Disc3,
+    Download,
+    FolderSync,
+    HardDrive,
+    Headphones,
+    ListFilter,
+    Pause,
+    Plug,
+    Plus,
+    RotateCw,
+    Search,
+    Settings2,
+    Shuffle,
+    SkipBack,
+    SkipForward,
+    SlidersHorizontal,
+    Tags,
+    Volume2,
+    Wand2,
+  } from "lucide-svelte";
   import type { UiDemoScreenProperties } from "./types";
 
   let { nextTheme, onToggleTheme }: UiDemoScreenProperties = $props();
 
-  const providerOptions = [
-    { label: "Local library", value: "local" },
-    { label: "Bandcamp provider", value: "bandcamp" },
-    { label: "SoundCloud provider", value: "soundcloud" },
-    { disabled: true, label: "Spotify provider unavailable", value: "spotify" },
+  const sources = [
+    { accent: "mint", count: "18.4K", icon: HardDrive, label: "Local Library" },
+    { accent: "amber", count: "214", icon: Plug, label: "Providers" },
+    { accent: "blue", count: "42", icon: FolderSync, label: "Imports" },
+    { accent: "neutral", count: "8", icon: Wand2, label: "Rules" },
   ];
 
-  const viewLayoutOptions = [{ label: "Justified", value: "justified" }];
-  const viewSortOptions = [{ label: "Global Settings", value: "global" }];
-  const viewInfoOptions = [{ label: "Tags", value: "tags" }];
-  const shortcutKeyElement = "key";
-  const popoverTabItems = [
-    { label: "Window", value: "window" },
-    { label: "Format", value: "format" },
-    { label: "Inspector", value: "inspector" },
-    { label: "Development", value: "development" },
-  ];
-  const sortDirectionItems: IconTabsItem[] = [
-    { icon: "sort-asc", label: "Sort ascending", value: "ascending" },
-    { icon: "sort-desc", label: "Sort descending", value: "descending" },
-  ];
-  const viewModeItems: IconTabsItem[] = [
-    { icon: "grid", label: "Grid view", value: "grid" },
-    { icon: "bookmark", label: "Bookmark view", value: "bookmark" },
-    { icon: "search", label: "Search view", value: "search" },
-  ];
-  const libraryModeItems: IconTabsItem[] = [
-    { icon: "grid", label: "Layout", value: "layout" },
-    { icon: "sort-asc", label: "Ascending", value: "ascending" },
-    { icon: "sort-desc", label: "Descending", value: "descending" },
-    { disabled: true, icon: "filter", label: "Filtered", value: "filtered" },
+  const playlists = [
+    { count: 128, label: "Inbox Review" },
+    { count: 64, label: "Late Night Systems" },
+    { count: 219, label: "Production Focus" },
+    { count: 38, label: "Unmatched Metadata" },
   ];
 
-  const typographyBase =
-    "fontFamily-lato fontWeight-regular lineHieght-extraTight";
-
-  const typographySamples = [
+  const tracks = [
     {
-      className: `${typographyBase} fontSize-xxxxl textColor-black`,
-      text: "Scale xxxxl",
+      accent: "mint",
+      album: "Dreamland",
+      artist: "Glass Animals",
+      bitrate: "320",
+      length: "3:58",
+      plays: "42",
+      source: "Local",
+      status: "Matched",
+      title: "Heat Waves",
+      year: "2020",
     },
     {
-      className: `${typographyBase} fontSize-xxxl textColor-black`,
-      text: "Scale xxxl",
+      accent: "blue",
+      album: "In Colour",
+      artist: "Jamie xx",
+      bitrate: "256",
+      length: "4:14",
+      plays: "17",
+      source: "Bandcamp",
+      status: "Review",
+      title: "Loud Places",
+      year: "2015",
     },
     {
-      className: `${typographyBase} fontSize-xxl textColor-black`,
-      text: "Scale xxl",
+      accent: "neutral",
+      album: "Migration",
+      artist: "Bonobo",
+      bitrate: "FLAC",
+      length: "5:45",
+      plays: "31",
+      source: "Local",
+      status: "Clean",
+      title: "Kerala",
+      year: "2017",
     },
     {
-      className: `${typographyBase} fontSize-xl textColor-black`,
-      text: "Scale xl",
+      accent: "amber",
+      album: "Random Access Memories",
+      artist: "Daft Punk",
+      bitrate: "320",
+      length: "6:09",
+      plays: "83",
+      source: "Provider",
+      status: "Tags",
+      title: "Giorgio by Moroder",
+      year: "2013",
     },
     {
-      className: `${typographyBase} fontSize-l textColor-black`,
-      text: "Scale l",
+      accent: "blue",
+      album: "Currents",
+      artist: "Tame Impala",
+      bitrate: "320",
+      length: "7:47",
+      plays: "26",
+      source: "Local",
+      status: "Matched",
+      title: "Let It Happen",
+      year: "2015",
     },
     {
-      className: `${typographyBase} fontSize-m textColor-black`,
-      text: "Scale m",
-    },
-    {
-      className: `${typographyBase} fontSize-s textColor-slate`,
-      text: "Scale s",
-    },
-    {
-      className: `${typographyBase} fontSize-xs textColor-slate`,
-      text: "Scale xs",
-    },
-    {
-      className:
-        "fontFamily-lato fontWeight-regular fontSize-s lineHieght-readable textColor-slate",
-      text: "Readable line height on size s.",
-    },
-    {
-      className: `${typographyBase} fontSize-s textColor-primary`,
-      text: "textColor-primary",
-    },
-    {
-      className: `${typographyBase} fontSize-s textColor-ui-warning`,
-      text: "textColor-ui-warning",
-    },
-    {
-      className:
-        "fontSize-xs font-mono fontWeight-regular lineHieght-extraTight textColor-black",
-      text: "mantra.provider.local.scan()",
+      accent: "mint",
+      album: "Glow On",
+      artist: "Turnstile",
+      bitrate: "256",
+      length: "2:53",
+      plays: "9",
+      source: "Import",
+      status: "New",
+      title: "Holiday",
+      year: "2021",
     },
   ];
 
-  let searchValue = $state("Glass Animals");
-  let errorValue = $state("bad://playlist");
-  let notesValue = $state("");
-  let minValue = $state("");
-  let maxValue = $state("");
-  let providerValue = $state("local");
-  let viewLayoutValue = $state("justified");
-  let viewSortValue = $state("global");
-  let viewInfoValue = $state("tags");
-  let popoverTabValue = $state("window");
-  let sortDirectionValue = $state("descending");
-  let popoverSortDirectionValue = $state("descending");
-  let viewModeValue = $state("grid");
-  let libraryModeValue = $state("ascending");
-  let showItemInfo = $state(true);
-  let radioButtonScrollMode = $state("prev-next");
-  let radioButtonLaunchMode = $state("library");
-  let checkboxChecked = $state(true);
-  let checkboxIndeterminate = $state(false);
-  let compactMode = $state(false);
-  let liveUpdates = $state(true);
-  let sectionsVisible = $state(true);
-  let modalOpen = $state(false);
-  let popoverOpen = $state(false);
+  const audits = [
+    { label: "Duplicate files", value: "312", variant: "warning" },
+    { label: "Missing artwork", value: "87", variant: "info" },
+    { label: "Broken paths", value: "12", variant: "danger" },
+  ];
+
+  const pluginQueue = [
+    { label: "Bandcamp metadata", state: "Active", value: "14/s" },
+    { label: "Acoustic fingerprint", state: "Idle", value: "0/s" },
+    { label: "Cover art resolver", state: "Active", value: "6/s" },
+  ];
+  const waveformBars = [
+    16, 27, 38, 49, 26, 37, 48, 25, 36, 47, 24, 35, 46, 23, 34, 45, 22, 33, 44,
+    21, 32, 43, 20, 31,
+  ];
+
+  let selectedTrackTitle = $state(tracks[0]?.title ?? "");
+  let activeSource = $state(sources[0]?.label ?? "");
+  let activeView = $state("Tracks");
+  let compactRows = $state(true);
+
+  const selectedTrack = $derived(
+    tracks.find((track) => track.title === selectedTrackTitle) ?? tracks[0],
+  );
 </script>
 
-<main
-  class={`mantra-app mantra-demo${sectionsVisible ? "" : " mantra-demo--plain-sections"}`}
-  aria-label="Mantra UI debug demo"
->
-  <section class="mantra-demo__hero">
-    <div>
-      <p class="mantra-demo__eyebrow">Mantra UI Debug Demo</p>
-      <h1>Base component style preview</h1>
-      <p>
-        A temporary screen for checking Mantra tokens, light and dark themes,
-        and shared UI component states.
-      </p>
+<svelte:head>
+  <title>Mantra Music Player</title>
+</svelte:head>
+
+<div class="app-frame" data-density={compactRows ? "compact" : "comfortable"}>
+  <aside class="sidebar" aria-label="Library navigation">
+    <div class="brand-block">
+      <div class="brand-mark" aria-hidden="true">
+        <AudioLines size={18} strokeWidth={1.8} />
+      </div>
+      <div>
+        <p class="eyebrow">Mantra</p>
+        <h1>Library OS</h1>
+      </div>
     </div>
 
-    <div class="mantra-demo__hero-actions">
-      <Button variant="primary" onclick={() => (modalOpen = true)}
-        >Open modal</Button
-      >
-      <Button variant="secondary" onclick={onToggleTheme}
-        >Switch to {nextTheme} theme</Button
-      >
-      <Button
-        aria-pressed={!sectionsVisible}
-        variant="secondary"
-        onclick={() => (sectionsVisible = !sectionsVisible)}
-        >Switch Sections</Button
-      >
-    </div>
-  </section>
-
-  <div class="mantra-demo__grid">
-    <Section
-      description="Variants, sizes, loading, disabled, and pressed states."
-      title="Buttons"
-    >
-      <div class="mantra-demo__stack">
-        <div class="mantra-demo__row">
-          <Button variant="primary">Primary</Button>
-          <Button variant="secondary">Secondary</Button>
-          <Button variant="ghost">Ghost</Button>
-          <Button variant="danger">Danger</Button>
-        </div>
-
-        <div class="mantra-demo__row">
-          <Button size="sm">Small</Button>
-          <Button size="md">Medium</Button>
-          <Button size="lg">Large</Button>
-        </div>
-
-        <div class="mantra-demo__row">
-          <Button loading variant="primary">Loading</Button>
-          <Button disabled>Disabled</Button>
-          <Button pressed variant="secondary">Pressed</Button>
-        </div>
-      </div>
-    </Section>
-
-    <Section
-      description="Neutral, search, readonly action, compact sizing, and error state."
-      title="Text fields"
-    >
-      <div class="mantra-demo__stack">
-        <TextField
-          bind:value={searchValue}
-          label="Search"
-          placeholder="Search..."
-          type="search"
+    <nav class="source-list" aria-label="Sources">
+      {#each sources as source}
+        {@const SourceIcon = source.icon}
+        <button
+          class:active={source.label === activeSource}
+          onclick={() => (activeSource = source.label)}
+          type="button"
         >
-          {#snippet leading()}
-            <Icon name="search" />
-          {/snippet}
-        </TextField>
-
-        <TextField
-          label="API Token"
-          readonly
-          value="105df84d-e1f1-45e4-8c77-4d6ae19c7d7f"
-        >
-          {#snippet trailing()}
-            <IconButton icon="copy" label="Copy API token" />
-          {/snippet}
-        </TextField>
-
-        <TextField
-          bind:value={notesValue}
-          label="Notes"
-          placeholder="Notes..."
-        />
-
-        <div class="mantra-demo__panel-header-field">
-          <TextField
-            appearance="panel-header"
-            placeholder="Search..."
-            type="search"
-          >
-            {#snippet leading()}
-              <Icon name="search" />
-            {/snippet}
-          </TextField>
-        </div>
-
-        <TextField
-          bind:value={errorValue}
-          error="Provider URL must start with https://"
-          label="Provider URL"
-          tone="danger"
-        />
-
-        <div class="mantra-demo__row">
-          <TextField
-            bind:value={minValue}
-            class="mantra-demo__range-field"
-            inputSize="sm"
-            placeholder="Min"
-          />
-          <TextField
-            bind:value={maxValue}
-            class="mantra-demo__range-field"
-            inputSize="sm"
-            placeholder="Max"
-          />
-        </div>
-      </div>
-    </Section>
-
-    <Section
-      description="Native dropdown styling for provider and settings choices."
-      title="Select"
-    >
-      <div class="mantra-demo__stack">
-        <Select
-          bind:value={providerValue}
-          description="Uses the same control height, border, and focus language as TextField."
-          label="Music provider"
-          options={providerOptions}
-        />
-
-        <Select
-          error="A provider must be selected before import."
-          label="Error select"
-          options={[
-            { label: "Choose provider", value: "" },
-            ...providerOptions,
-          ]}
-          value=""
-        />
-      </div>
-    </Section>
-
-    <Section
-      description="Checked, unchecked, disabled, and hover states."
-      title="Checkboxes"
-    >
-      <div class="mantra-demo__stack">
-        <Checkbox
-          bind:checked={checkboxChecked}
-          label="Enable transparency effects"
-        />
-
-        <Checkbox
-          bind:checked={checkboxIndeterminate}
-          label="Show count on the sidebar"
-        />
-
-        <Checkbox checked label="Show menu icon" />
-        <Checkbox disabled label="Disabled checkbox" />
-      </div>
-    </Section>
-
-    <Section
-      description="Native radio choices using shared control styling."
-      title="Radio buttons"
-    >
-      <div class="mantra-demo__stack">
-        <div class="mantra-demo__radio-grid">
-          <RadioButton
-            bind:group={radioButtonScrollMode}
-            label="Vertical Scroll"
-            name="scroll-mode"
-            value="vertical-scroll"
-          />
-          <RadioButton
-            bind:group={radioButtonScrollMode}
-            label="Prev/Next"
-            name="scroll-mode"
-            value="prev-next"
-          />
-          <RadioButton
-            bind:group={radioButtonScrollMode}
-            label="Zoom in/out"
-            name="scroll-mode"
-            value="zoom"
-          />
-        </div>
-
-        <div class="mantra-demo__radio-grid">
-          <RadioButton checked label="Enable" name="binary-mode" />
-          <RadioButton label="Disable" name="binary-mode" />
-        </div>
-
-        <div class="mantra-demo__radio-grid">
-          <RadioButton
-            bind:group={radioButtonLaunchMode}
-            label="View in library"
-            name="launch-mode"
-            value="library"
-          />
-          <RadioButton
-            bind:group={radioButtonLaunchMode}
-            label="Open With Default App"
-            name="launch-mode"
-            value="default-app"
-          />
-          <RadioButton
-            bind:group={radioButtonLaunchMode}
-            label="Open in new window"
-            name="launch-mode"
-            value="new-window"
-          />
-          <RadioButton
-            bind:group={radioButtonLaunchMode}
-            label="Default"
-            name="launch-mode"
-            value="default"
-          />
-          <RadioButton
-            bind:group={radioButtonLaunchMode}
-            label="Run Plugin"
-            name="launch-mode"
-            value="plugin"
-          />
-          <RadioButton disabled label="Disabled radio" name="disabled-mode" />
-        </div>
-      </div>
-    </Section>
-
-    <Section
-      description="Toggle rows in active, inactive, and disabled states."
-      title="Switches"
-    >
-      <div class="mantra-demo__stack">
-        <Switch
-          bind:checked={liveUpdates}
-          description="Refresh provider metadata while the app is open."
-          label="Live metadata updates"
-        />
-
-        <Switch
-          bind:checked={compactMode}
-          description="Reduce row height in dense music lists."
-          label="Compact library rows"
-        />
-
-        <Switch checked disabled label="Disabled switch" />
-      </div>
-    </Section>
-
-    <Section
-      description="Tag and folder pills for metadata panels."
-      title="Chips"
-    >
-      <div class="mantra-demo__chip-stack">
-        <div class="mantra-demo__chip-group">
-          <span class="fontSize-xs fontWeight-bold textColor-sliver">Tags</span>
-          <div class="mantra-demo__chip-row">
-            <Chip removable>IMG</Chip>
-            <Chip removable>animal</Chip>
-            <Chip removable>chatgpt</Chip>
-            <Chip create aria-label="Add tag" />
-          </div>
-        </div>
-
-        <div class="mantra-demo__chip-group">
-          <span class="fontSize-xs fontWeight-bold textColor-sliver"
-            >Folders</span
-          >
-          <div class="mantra-demo__chip-row">
-            <Chip removable>Vibe Ride</Chip>
-            <Chip create aria-label="Add folder" />
-          </div>
-        </div>
-      </div>
-    </Section>
-
-    <Section
-      description="Hover and focus hints for actions, labels, shortcuts, and fields."
-      title="Tooltips"
-    >
-      <div class="mantra-demo__stack">
-        <div class="mantra-demo__row">
-          <Tooltip label="Order By" placement="bottom">
-            <Button size="sm" variant="ghost">
-              {#snippet leading()}
-                <Icon name="sort-asc" />
-              {/snippet}
-              Order
-            </Button>
-          </Tooltip>
-
-          <Tooltip placement="bottom">
-            {#snippet content()}
-              Add Category <svelte:element this={shortcutKeyElement}
-                >F</svelte:element
-              >
-            {/snippet}
-            <IconButton icon="plus" label="Add category" variant="chip-add" />
-          </Tooltip>
-        </div>
-
-        <div class="mantra-demo__chip-row">
-          <Tooltip label="#1C0F04 (0.7%)">
-            <Chip>#1C0F04</Chip>
-          </Tooltip>
-          <Tooltip placement="right">
-            {#snippet content()}
-              Color <svelte:element this={shortcutKeyElement}>C</svelte:element>
-            {/snippet}
-            <Chip removable>Color</Chip>
-          </Tooltip>
-        </div>
-
-        <Tooltip label="Search library by title, artist, or album">
-          <TextField placeholder="Hover the field..." type="search">
-            {#snippet leading()}
-              <Icon name="search" />
-            {/snippet}
-          </TextField>
-        </Tooltip>
-      </div>
-    </Section>
-
-    <Section
-      description="Icon-only segmented tabs using shared segmented controls."
-      title="Icon tabs"
-    >
-      <div class="mantra-demo__stack">
-        <div class="mantra-demo__row">
-          <IconTabs
-            bind:activeValue={sortDirectionValue}
-            aria-label="Sort direction"
-            items={sortDirectionItems}
-            tabIdPrefix="mantra-demo-sort-direction"
-          />
-        </div>
-
-        <div class="mantra-demo__row">
-          <IconTabs
-            bind:activeValue={viewModeValue}
-            aria-label="View mode"
-            items={viewModeItems}
-            tabIdPrefix="mantra-demo-view-mode"
-          />
-        </div>
-
-        <div class="mantra-demo__row">
-          <IconTabs
-            bind:activeValue={libraryModeValue}
-            aria-label="Library mode"
-            items={libraryModeItems}
-            tabIdPrefix="mantra-demo-library-mode"
-          />
-        </div>
-      </div>
-    </Section>
-
-    <Section
-      description="Popover tab navigation for search and plugin panels."
-      title="Tabs"
-    >
-      <div class="mantra-demo__tabs-preview">
-        <Tabs
-          bind:activeValue={popoverTabValue}
-          aria-label="Plugin search categories"
-          items={popoverTabItems}
-          panelId="mantra-demo-popover-tab-panel"
-          tabIdPrefix="mantra-demo-popover-tab"
-        />
-
-        <div
-          aria-labelledby={`mantra-demo-popover-tab-${popoverTabValue}`}
-          class="mantra-demo__tabs-preview-panel"
-          id="mantra-demo-popover-tab-panel"
-          role="tabpanel"
-        >
-          <span class="mantra-demo__preview-label">
-            {popoverTabItems.find((item) => item.value === popoverTabValue)
-              ?.label}
+          <span class="source-icon" data-accent={source.accent}>
+            <SourceIcon size={16} strokeWidth={1.8} />
           </span>
-        </div>
-      </div>
-    </Section>
+          <span>{source.label}</span>
+          <span class="source-count">{source.count}</span>
+        </button>
+      {/each}
+    </nav>
 
-    <div class="mantra-demo__popover-demo">
-      <Popover
-        bind:open={popoverOpen}
-        placement="bottom"
-        surfaceSize="lg"
-        triggerMode="custom"
-      >
-        {#snippet trigger(state)}
-          <Button
-            aria-expanded={state.open}
-            aria-haspopup="dialog"
-            onclick={state.toggle}
-            pressed={state.open}
-            size="md"
-            variant="secondary"
-          >
-            {#snippet leading()}
-              <Icon name="filter" />
-            {/snippet}
-            View options
-          </Button>
-        {/snippet}
-
-        {#snippet children()}
-          <div class="popover-menu">
-            <div class="popover-menu__row">
-              <span class="popover-menu__label">Layout</span>
-              <Select
-                bind:value={viewLayoutValue}
-                controlWidth="md"
-                options={viewLayoutOptions}
-              >
-                {#snippet leading()}
-                  <Icon name="grid" />
-                {/snippet}
-              </Select>
-            </div>
-
-            <div class="popover-menu__separator"></div>
-
-            <div class="popover-menu__row">
-              <span class="popover-menu__label">Sort by</span>
-              <div class="popover-menu__control-group">
-                <Select
-                  bind:value={viewSortValue}
-                  controlWidth="md"
-                  options={viewSortOptions}
-                />
-                <IconTabs
-                  bind:activeValue={popoverSortDirectionValue}
-                  aria-label="Sort direction"
-                  items={sortDirectionItems}
-                  tabIdPrefix="mantra-demo-popover-sort-direction"
-                />
-              </div>
-            </div>
-
-            <div class="popover-menu__separator"></div>
-
-            <Switch checked label="Show Name" />
-            <div class="popover-menu__row">
-              <Button
-                aria-controls="mantra-demo-show-item-info"
-                onclick={() => (showItemInfo = !showItemInfo)}
-                size="sm"
-                variant="text"
-              >
-                Show item info
-              </Button>
-              <div class="popover-menu__control-group">
-                <Select
-                  bind:value={viewInfoValue}
-                  controlWidth="sm"
-                  options={viewInfoOptions}
-                >
-                  {#snippet leading()}
-                    <Icon name="bookmark" />
-                  {/snippet}
-                </Select>
-                <Switch
-                  bind:checked={showItemInfo}
-                  aria-label="Show item info"
-                  id="mantra-demo-show-item-info"
-                />
-              </div>
-            </div>
-            <Switch checked label="Show extension" />
-            <Switch checked label="Show extension label" />
-            <Switch disabled label="Show annotation" />
-            <Switch disabled label="Show subfolder contents" />
-
-            <div class="popover-menu__separator"></div>
-
-            <Switch checked label="Show sidebar" />
-            <Switch checked label="Show inspector" />
-
-            <div class="popover-menu__separator"></div>
-
-            <Button block size="md" variant="secondary">Refresh</Button>
-          </div>
-        {/snippet}
-      </Popover>
-    </div>
-
-    <Section
-      description="Dialog surface, title, description, content, and footer layout."
-      title="Modal"
-    >
-      <div class="mantra-demo__stack">
-        <Button variant="primary" onclick={() => (modalOpen = true)}
-          >Show dialog</Button
+    <section class="sidebar-section" aria-labelledby="playlist-heading">
+      <div class="section-heading">
+        <h2 id="playlist-heading">Collections</h2>
+        <button aria-label="Create collection" type="button"
+          ><Plus size={14} /></button
         >
       </div>
-    </Section>
-
-    <Section disabled title="Password">
-      <div class="mantra-demo__stack">
-        <p class="fontSize-xs fontWeight-regular textColor-slate">
-          Password Lock protects local library settings while the app is away.
-        </p>
-        <Button variant="ghost">Change Password...</Button>
-        <Button variant="ghost">Lock Now</Button>
+      <div class="playlist-list">
+        {#each playlists as playlist}
+          <button type="button">
+            <span>{playlist.label}</span>
+            <span>{playlist.count}</span>
+          </button>
+        {/each}
       </div>
-    </Section>
+    </section>
 
-    <Section
-      class="mantra-demo__section--wide"
-      description="Eagle typography utility classes from typography.css (fontSize, fontWeight, lineHieght, textColor, font-mono)."
-      title="Typography"
-    >
-      <div class="mantra-demo__typography-list">
-        {#each typographySamples as item, index (item.className)}
-          <div class="mantra-demo__typography-item">
-            {#if index > 0}
-              <hr class="mantra-demo__typography-divider" />
-            {/if}
-            <p class={item.className}>{item.text}</p>
+    <section class="storage-card" aria-label="Storage usage">
+      <div>
+        <Database size={16} strokeWidth={1.8} />
+        <span>Archive</span>
+      </div>
+      <strong>482 GB</strong>
+      <div class="meter" aria-hidden="true">
+        <span style="width: 68%"></span>
+      </div>
+      <p>68% indexed, 2 sources pending</p>
+    </section>
+  </aside>
+
+  <main class="workspace" aria-label="Music library workspace">
+    <header class="topbar">
+      <div class="search-shell">
+        <Search size={17} strokeWidth={1.8} />
+        <input
+          aria-label="Search music library"
+          value="artist:glass tag:focus"
+        />
+        <kbd>CMD K</kbd>
+      </div>
+
+      <div class="topbar-actions">
+        <button class="quiet-button" type="button">
+          <RotateCw size={15} />
+          Sync
+        </button>
+        <button class="quiet-button" onclick={onToggleTheme} type="button">
+          <Settings2 size={15} />
+          {nextTheme}
+        </button>
+        <button class="solid-button" type="button">
+          <Download size={15} />
+          Import
+        </button>
+      </div>
+    </header>
+
+    <section class="library-header" aria-labelledby="library-title">
+      <div>
+        <p class="eyebrow">Cross-provider library</p>
+        <h2 id="library-title">Tracks requiring attention</h2>
+        <p>
+          A practical control surface for indexing, tagging, provider matching,
+          duplicate review, and everyday playback.
+        </p>
+      </div>
+
+      <div class="status-grid" aria-label="Library status">
+        <div>
+          <span>Tracks</span>
+          <strong>18,426</strong>
+        </div>
+        <div>
+          <span>Albums</span>
+          <strong>1,284</strong>
+        </div>
+        <div>
+          <span>Match rate</span>
+          <strong>96.2%</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-grid">
+      <div class="library-panel">
+        <div class="panel-toolbar">
+          <div class="segmented-control" aria-label="Library view">
+            {#each ["Tracks", "Albums", "Artists", "Tags"] as view}
+              <button
+                aria-pressed={activeView === view}
+                onclick={() => (activeView = view)}
+                type="button"
+              >
+                {view}
+              </button>
+            {/each}
+          </div>
+
+          <div class="toolbar-tools">
+            <button aria-label="Filter tracks" type="button">
+              <ListFilter size={15} />
+            </button>
+            <button aria-label="Library options" type="button">
+              <SlidersHorizontal size={15} />
+            </button>
+            <label class="density-toggle">
+              <input bind:checked={compactRows} type="checkbox" />
+              Dense
+            </label>
+          </div>
+        </div>
+
+        <div class="track-table" role="table" aria-label="Tracks">
+          <div class="table-row table-head" role="row">
+            <span role="columnheader">Title</span>
+            <span role="columnheader">Album</span>
+            <span role="columnheader">Src</span>
+            <span role="columnheader">Year</span>
+            <span role="columnheader">Bit</span>
+            <span role="columnheader">Time</span>
+            <span role="columnheader">State</span>
+          </div>
+
+          {#each tracks as track}
+            <button
+              class:active={track.title === selectedTrackTitle}
+              class="table-row"
+              onclick={() => (selectedTrackTitle = track.title)}
+              role="row"
+              type="button"
+            >
+              <span class="track-title-cell" role="cell">
+                <span
+                  class="cover"
+                  data-accent={track.accent}
+                  aria-hidden="true"
+                >
+                  <Disc3 size={18} strokeWidth={1.6} />
+                </span>
+                <span>
+                  <strong>{track.title}</strong>
+                  <small>{track.artist}</small>
+                </span>
+              </span>
+              <span role="cell">{track.album}</span>
+              <span role="cell">{track.source}</span>
+              <span role="cell">{track.year}</span>
+              <span role="cell">{track.bitrate}</span>
+              <span role="cell">{track.length}</span>
+              <span role="cell"
+                ><mark data-accent={track.accent}>{track.status}</mark></span
+              >
+            </button>
+          {/each}
+        </div>
+      </div>
+
+      <aside class="inspector" aria-label="Track inspector">
+        <div
+          class="inspector-cover"
+          data-accent={selectedTrack?.accent ?? "neutral"}
+        >
+          <Album size={44} strokeWidth={1.4} />
+        </div>
+
+        <div class="inspector-title">
+          <p class="eyebrow">Selected track</p>
+          <h2>{selectedTrack?.title}</h2>
+          <p>{selectedTrack?.artist} / {selectedTrack?.album}</p>
+        </div>
+
+        <div class="metadata-list">
+          <div>
+            <span>Provider</span><strong>{selectedTrack?.source}</strong>
+          </div>
+          <div>
+            <span>Bitrate</span><strong>{selectedTrack?.bitrate}</strong>
+          </div>
+          <div><span>Plays</span><strong>{selectedTrack?.plays}</strong></div>
+          <div><span>Status</span><strong>{selectedTrack?.status}</strong></div>
+        </div>
+
+        <div class="tag-strip" aria-label="Tags">
+          <span><Tags size={13} /> focus</span>
+          <span>clean</span>
+          <span>library-core</span>
+        </div>
+
+        <section class="audit-list" aria-label="Audit summary">
+          <h3>Maintenance</h3>
+          {#each audits as audit}
+            <div data-variant={audit.variant}>
+              <span>{audit.label}</span>
+              <strong>{audit.value}</strong>
+            </div>
+          {/each}
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <aside class="right-rail" aria-label="Plugin activity">
+    <section class="rail-panel now-playing">
+      <div class="rail-heading">
+        <h2>Now Playing</h2>
+        <Headphones size={15} />
+      </div>
+      <p>{selectedTrack?.artist}</p>
+      <strong>{selectedTrack?.title}</strong>
+      <div class="waveform" aria-hidden="true">
+        {#each waveformBars as barHeight}
+          <span style={`height: ${barHeight}px`}></span>
+        {/each}
+      </div>
+      <div class="transport" aria-label="Playback controls">
+        <button aria-label="Shuffle" type="button"><Shuffle size={14} /></button
+        >
+        <button aria-label="Previous" type="button"
+          ><SkipBack size={15} /></button
+        >
+        <button class="play-button" aria-label="Pause" type="button"
+          ><Pause size={16} /></button
+        >
+        <button aria-label="Next" type="button"
+          ><SkipForward size={15} /></button
+        >
+        <button aria-label="Volume" type="button"><Volume2 size={14} /></button>
+      </div>
+    </section>
+
+    <section class="rail-panel">
+      <div class="rail-heading">
+        <h2>Provider Queue</h2>
+        <Activity size={15} />
+      </div>
+      <div class="plugin-list">
+        {#each pluginQueue as item}
+          <div>
+            <span><CircleDot size={10} /> {item.label}</span>
+            <strong>{item.value}</strong>
+            <small>{item.state}</small>
           </div>
         {/each}
       </div>
-    </Section>
-  </div>
+    </section>
 
-  <Modal
-    bind:open={modalOpen}
-    description="This temporary modal shows the shared dialog styling and action layout."
-    id="debug-demo-modal"
-    title="Create provider plugin"
-  >
-    <TextField label="Plugin name" placeholder="Bandcamp provider" />
-    <TextField label="Package id" placeholder="com.mantra.provider.bandcamp" />
-    <Checkbox checked label="Enable after creation" />
-
-    {#snippet footer()}
-      <Button variant="primary" onclick={() => (modalOpen = false)}
-        >Create</Button
-      >
-      <Button variant="secondary" onclick={() => (modalOpen = false)}
-        >Cancel</Button
-      >
-    {/snippet}
-  </Modal>
-</main>
-
-<style>
-  .mantra-demo {
-    gap: var(--spacing-m);
-    overflow: auto;
-    width: 100vw;
-    height: 100vh;
-    padding: var(--spacing-m);
-  }
-
-  .mantra-demo__hero {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: var(--spacing-m);
-    padding: var(--spacing-m);
-    border-top: var(--box-border-top);
-    border-right: var(--box-border-right);
-    border-bottom: var(--box-border-bottom);
-    border-left: var(--box-border-left);
-    border-radius: var(--radius-modal);
-    background: var(--box-background);
-    box-shadow: var(--box-border-shadow);
-  }
-
-  .mantra-demo__hero h1 {
-    margin: 0;
-    font-size: var(--font-size-xxl);
-    line-height: var(--line-height-tight);
-  }
-
-  .mantra-demo__hero p {
-    margin: var(--spacing-xxs) 0 0;
-    color: var(--color-text-secondary);
-    line-height: var(--line-height-readable);
-  }
-
-  .mantra-demo__eyebrow {
-    color: var(--color-text-tertiary);
-    font-size: var(--font-size-xs);
-    text-transform: uppercase;
-  }
-
-  .mantra-demo__hero-actions,
-  .mantra-demo__row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--spacing-xs);
-  }
-
-  .mantra-demo__popover-demo {
-    display: flex;
-    align-items: flex-start;
-    grid-column: 1 / -1;
-  }
-
-  .mantra-demo__grid {
-    display: grid;
-    grid-template-columns: repeat(
-      auto-fit,
-      minmax(var(--mantra-demo-grid-min-column), 1fr)
-    );
-    gap: var(--spacing-m);
-  }
-
-  .mantra-demo__section--wide {
-    grid-column: 1 / -1;
-  }
-
-  .mantra-demo--plain-sections :global(.section-surface__panel) {
-    overflow: visible;
-    padding: 0;
-    border-color: transparent;
-    border-radius: var(--radius-0);
-    background-color: transparent;
-  }
-
-  .mantra-demo--plain-sections .mantra-demo__tabs-preview {
-    margin: 0;
-  }
-
-  .mantra-demo__stack {
-    display: grid;
-    gap: var(--spacing-xs);
-  }
-
-  .mantra-demo__chip-stack {
-    display: grid;
-    gap: 0;
-  }
-
-  .mantra-demo__chip-group {
-    width: 100%;
-    margin-top: var(--mantra-info-section-offset);
-    padding-top: var(--mantra-info-section-offset);
-    border-top: var(--border-width) solid var(--color-border-secondary);
-  }
-
-  .mantra-demo__chip-group > span {
-    display: flex;
-    align-items: center;
-    height: var(--mantra-info-section-label-height);
-    margin-bottom: var(--mantra-label-container-gap);
-  }
-
-  .mantra-demo__chip-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--mantra-label-container-gap);
-    align-items: center;
-  }
-
-  .mantra-demo__typography-list {
-    display: grid;
-    gap: 0;
-  }
-
-  .mantra-demo__typography-divider {
-    margin: 0;
-    border: 0;
-    border-top: var(--border-width) solid var(--color-border-secondary);
-  }
-
-  .mantra-demo__typography-item p {
-    margin: 0;
-    padding: var(--spacing-xs) 0;
-  }
-
-  .mantra-demo__range-field {
-    width: var(--mantra-demo-range-field-width);
-  }
-
-  .mantra-demo__radio-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: start;
-    gap: var(--mantra-section-gap);
-  }
-
-  .mantra-demo__panel-header-field {
-    display: flex;
-    align-items: center;
-    min-height: var(--mantra-field-control-height-lg);
-    padding: 0 var(--mantra-select-padding-x) 0 0;
-    gap: var(--mantra-segment-gap);
-    box-shadow: 0 calc(var(--border-width) * -1) 0 0 inset
-      var(--color-border-secondary);
-  }
-
-  .mantra-demo__panel-header-field :global(.text-field) {
-    flex: 1;
-  }
-
-  .mantra-demo__tabs-preview {
-    display: grid;
-    gap: 0;
-    margin: calc(var(--mantra-section-padding) * -1);
-  }
-
-  .mantra-demo__tabs-preview-panel {
-    display: grid;
-    min-height: var(--mantra-demo-tabs-preview-min-height);
-    padding: var(--spacing-xs) var(--spacing-s);
-    color: var(--color-text-primary);
-    font-size: var(--font-size-xs);
-    line-height: var(--mantra-control-text-line-height-md);
-  }
-
-  .mantra-demo__preview-label {
-    color: var(--color-text-primary);
-    font-size: var(--font-size-xs);
-    line-height: var(--mantra-control-text-line-height-md);
-  }
-</style>
+    <section class="rail-panel timeline">
+      <div class="rail-heading">
+        <h2>Today</h2>
+        <Clock3 size={15} />
+      </div>
+      <ol>
+        <li><span>09:18</span> Indexed local folder</li>
+        <li><span>09:24</span> Matched 128 tracks</li>
+        <li><span>09:31</span> Found 12 broken paths</li>
+      </ol>
+    </section>
+  </aside>
+</div>

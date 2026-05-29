@@ -5,7 +5,6 @@
   let {
     block = false,
     children,
-    class: className = "",
     disabled = false,
     ghost = false,
     hoverVariant,
@@ -20,14 +19,6 @@
     ...rest
   }: ButtonProperties = $props();
 
-  const sizeClasses = {
-    lg: "button-lg",
-    md: "button-md",
-    sm: "button-sm",
-    xl: "button-xl",
-    xs: "button-xs",
-  } as const;
-
   const resolvedVariant = $derived(
     variant === "danger"
       ? "negative"
@@ -38,51 +29,33 @@
           : variant,
   );
   const isGhost = $derived(ghost);
-  const sizeClass = $derived(sizeClasses[size]);
-  const buttonClass = $derived(
-    [
-      "button",
-      "fontSize-s",
-      "fontWeight-regular",
-      "lineHieght-extraTight",
-      `button-${resolvedVariant}`,
-      sizeClass,
-      isGhost && "button-ghost",
-      block && "button-block",
-      rounded && "button-rounded",
-      hoverVariant && `button-hover-${hoverVariant}`,
-      (disabled || loading) && "button-disabled",
-      loading && "button-loading",
-      pressed && "active",
-      className,
-    ]
-      .filter(Boolean)
-      .join(" "),
-  );
+
+  $effect(() => {
+    void [block, hoverVariant, isGhost, resolvedVariant, rounded, size];
+  });
 </script>
 
 <button
   {...rest}
   aria-busy={loading || undefined}
   aria-pressed={pressed}
-  class={buttonClass}
   disabled={disabled || loading}
   {type}
 >
   {#if leading}
-    <span aria-hidden="true" class="button__slot">
+    <span aria-hidden="true">
       {@render leading()}
     </span>
   {/if}
 
   {#if children}
-    <span class="button__label">
+    <span>
       {@render children()}
     </span>
   {/if}
 
   {#if trailing}
-    <span aria-hidden="true" class="button__slot">
+    <span aria-hidden="true">
       {@render trailing()}
     </span>
   {/if}

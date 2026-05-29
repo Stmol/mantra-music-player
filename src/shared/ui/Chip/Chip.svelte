@@ -5,7 +5,6 @@
   // svelte-ignore custom_element_props_identifier
   let {
     children,
-    class: _className,
     create = false,
     fullWidth = false,
     removable = false,
@@ -13,53 +12,27 @@
     ...rest
   }: ChipProperties = $props();
 
-  const chipClass = $derived(
-    [
-      "chip",
-      "fontSize-xs",
-      "fontWeight-regular",
-      "lineHieght-extraTight",
-      create ? "create-label-btn" : "label-item",
-      fullWidth && "create-label-btn--full-width",
-      _className,
-    ]
-      .filter(Boolean)
-      .join(" "),
-  );
+  $effect(() => {
+    void fullWidth;
+  });
 </script>
 
 {#if create && !children}
-  <IconButton
-    {...rest}
-    class={chipClass}
-    icon="plus"
-    {type}
-    variant="chip-add"
-  />
+  <IconButton {...rest} icon="plus" {type} variant="chip-add" />
 {:else}
-  <button {...rest} class={chipClass} {type}>
+  <button {...rest} {type}>
     {#if create}
-      <IconButton
-        as="span"
-        class="create-label-btn__icon"
-        icon="plus"
-        variant="chip-add"
-      />
+      <IconButton as="span" icon="plus" variant="chip-add" />
     {/if}
 
     {#if children}
-      <span class="label-item-name">
+      <span>
         {@render children()}
       </span>
     {/if}
 
     {#if !create && removable}
-      <IconButton
-        as="span"
-        class="label-item-remove-btn"
-        icon="close"
-        variant="chip-remove"
-      />
+      <IconButton as="span" icon="close" variant="chip-remove" />
     {/if}
   </button>
 {/if}

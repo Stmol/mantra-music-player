@@ -4,7 +4,6 @@
   // svelte-ignore custom_element_props_identifier
   let {
     checked = $bindable(false),
-    class: _className,
     description,
     disabled = false,
     id,
@@ -18,17 +17,12 @@
   const descriptionId = $derived(
     fieldId && description ? `${fieldId}-description` : undefined,
   );
-  const checkboxClass = $derived(
-    ["checkbox", "fontSize-s", "fontWeight-regular", _className]
-      .filter(Boolean)
-      .join(" "),
-  );
   const state = $derived(
     indeterminate ? "mixed" : checked ? "checked" : "idle",
   );
 </script>
 
-<label class={checkboxClass} data-state={state}>
+<label data-state={state}>
   <input
     {...rest}
     aria-checked={indeterminate ? "mixed" : checked}
@@ -39,22 +33,19 @@
     type="checkbox"
   />
 
-  <span class="control-indicator">
+  <span>
     {#if marker}
       {@render marker()}
     {/if}
   </span>
 
-  <span class="control__content">
+  <span>
     {#if label}
-      <span class="control__label fontSize-s fontWeight-regular">{label}</span>
+      <span>{label}</span>
     {/if}
 
     {#if description}
-      <span
-        class="control__description fontSize-xs fontWeight-regular"
-        id={descriptionId}
-      >
+      <span id={descriptionId}>
         {description}
       </span>
     {/if}

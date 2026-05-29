@@ -15,7 +15,6 @@
   // svelte-ignore custom_element_props_identifier
   let {
     children,
-    class: _className,
     content,
     delay = DEFAULT_TOOLTIP_DELAY_MS,
     disabled = false,
@@ -150,7 +149,7 @@
   };
 
   $effect(() => {
-    void [_className, _placement];
+    void _placement;
 
     if (!mounted) {
       return;
@@ -170,7 +169,6 @@
   {...rest}
   aria-describedby={mounted ? tooltipId : undefined}
   bind:this={triggerElement}
-  class={_className}
   onfocusin={show}
   onfocusout={hide}
   onmouseenter={show}
@@ -187,7 +185,6 @@
   <span data-tippy-root style={rootStyle}>
     <span
       bind:this={tooltipElement}
-      class="tippy-box"
       data-animation="scale"
       data-placement={_placement}
       data-state={tooltipState}
@@ -195,7 +192,7 @@
       role="tooltip"
       style={boxStyle}
     >
-      <span class="tippy-content fontSize-xs fontWeight-regular">
+      <span>
         {#if content}
           {@render content()}
         {:else}

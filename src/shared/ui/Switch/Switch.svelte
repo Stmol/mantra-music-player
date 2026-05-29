@@ -4,7 +4,6 @@
   // svelte-ignore custom_element_props_identifier
   let {
     checked = $bindable(false),
-    class: _className,
     description,
     disabled = false,
     label,
@@ -20,18 +19,12 @@
     }
   };
 
-  const switchClass = $derived(
-    ["switch", "fontSize-s", "fontWeight-regular", _className]
-      .filter(Boolean)
-      .join(" "),
-  );
   const state = $derived(checked ? "checked" : "idle");
 </script>
 
 <button
   {...rest}
   aria-checked={checked}
-  class={switchClass}
   data-state={state}
   {disabled}
   onclick={toggle}
@@ -39,22 +32,19 @@
   {type}
 >
   {#if label || description}
-    <span class="control__content">
+    <span>
       {#if label}
-        <span class="control__label fontSize-s fontWeight-regular">{label}</span
-        >
+        <span>{label}</span>
       {/if}
 
       {#if description}
-        <span class="control__description fontSize-xs fontWeight-regular"
-          >{description}</span
-        >
+        <span>{description}</span>
       {/if}
     </span>
   {/if}
 
-  <span aria-hidden="true" class="switch__track">
-    <span class="switch__thumb">
+  <span aria-hidden="true">
+    <span>
       {#if checked && onIcon}
         {@render onIcon()}
       {:else if !checked && offIcon}
