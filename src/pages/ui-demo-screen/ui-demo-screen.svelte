@@ -14,7 +14,6 @@
     ListFilter,
     Pause,
     Plug,
-    Plus,
     RotateCw,
     Search,
     Settings2,
@@ -26,6 +25,14 @@
     Volume2,
     Wand2,
   } from "lucide-svelte";
+  import {
+    Button,
+    Chip,
+    IconButton,
+    Section,
+    Tabs,
+    TextField,
+  } from "../../shared/ui";
   import type { UiDemoScreenProperties } from "./types";
 
   let { nextTheme, onToggleTheme }: UiDemoScreenProperties = $props();
@@ -140,6 +147,13 @@
   let activeView = $state("Tracks");
   let compactRows = $state(true);
 
+  const libraryViews = [
+    { label: "Tracks", value: "Tracks" },
+    { label: "Albums", value: "Albums" },
+    { label: "Artists", value: "Artists" },
+    { label: "Tags", value: "Tags" },
+  ];
+
   const selectedTrack = $derived(
     tracks.find((track) => track.title === selectedTrackTitle) ?? tracks[0],
   );
@@ -178,13 +192,16 @@
       {/each}
     </nav>
 
-    <section class="sidebar-section" aria-labelledby="playlist-heading">
-      <div class="section-heading">
-        <h2 id="playlist-heading">Collections</h2>
-        <button aria-label="Create collection" type="button"
-          ><Plus size={14} /></button
-        >
-      </div>
+    <Section class="sidebar-section" title="Collections">
+      {#snippet headerActions()}
+        <IconButton
+          aria-label="Create collection"
+          size="sm"
+          variant="control"
+          type="button"
+        />
+      {/snippet}
+
       <div class="playlist-list">
         {#each playlists as playlist}
           <button type="button">
@@ -193,7 +210,7 @@
           </button>
         {/each}
       </div>
-    </section>
+    </Section>
 
     <section class="storage-card" aria-label="Storage usage">
       <div>
@@ -210,28 +227,39 @@
 
   <main class="workspace" aria-label="Music library workspace">
     <header class="topbar">
-      <div class="search-shell">
-        <Search size={17} strokeWidth={1.8} />
-        <input
-          aria-label="Search music library"
-          value="artist:glass tag:focus"
-        />
-        <kbd>CMD K</kbd>
-      </div>
+      <TextField
+        appearance="panel-header"
+        aria-label="Search music library"
+        class="topbar-search"
+        value="artist:glass tag:focus"
+      >
+        {#snippet leading()}
+          <Search size={17} strokeWidth={1.8} />
+        {/snippet}
+        {#snippet trailing()}
+          <kbd>CMD K</kbd>
+        {/snippet}
+      </TextField>
 
       <div class="topbar-actions">
-        <button class="quiet-button" type="button">
-          <RotateCw size={15} />
-          Sync
-        </button>
-        <button class="quiet-button" onclick={onToggleTheme} type="button">
-          <Settings2 size={15} />
-          {nextTheme}
-        </button>
-        <button class="solid-button" type="button">
-          <Download size={15} />
-          Import
-        </button>
+        <Button type="button" variant="secondary">
+          {#snippet children()}
+            <RotateCw size={15} />
+            Sync
+          {/snippet}
+        </Button>
+        <Button onclick={onToggleTheme} type="button" variant="secondary">
+          {#snippet children()}
+            <Settings2 size={15} />
+            {nextTheme}
+          {/snippet}
+        </Button>
+        <Button type="button" variant="primary">
+          {#snippet children()}
+            <Download size={15} />
+            Import
+          {/snippet}
+        </Button>
       </div>
     </header>
 
@@ -264,25 +292,27 @@
     <section class="content-grid">
       <div class="library-panel">
         <div class="panel-toolbar">
-          <div class="segmented-control" aria-label="Library view">
-            {#each ["Tracks", "Albums", "Artists", "Tags"] as view}
-              <button
-                aria-pressed={activeView === view}
-                onclick={() => (activeView = view)}
-                type="button"
-              >
-                {view}
-              </button>
-            {/each}
-          </div>
+          <Tabs
+            aria-label="Library view"
+            bind:activeValue={activeView}
+            items={libraryViews}
+          />
 
           <div class="toolbar-tools">
-            <button aria-label="Filter tracks" type="button">
+            <IconButton
+              aria-label="Filter tracks"
+              type="button"
+              variant="control"
+            >
               <ListFilter size={15} />
-            </button>
-            <button aria-label="Library options" type="button">
+            </IconButton>
+            <IconButton
+              aria-label="Library options"
+              type="button"
+              variant="control"
+            >
               <SlidersHorizontal size={15} />
-            </button>
+            </IconButton>
             <label class="density-toggle">
               <input bind:checked={compactRows} type="checkbox" />
               Dense
@@ -361,9 +391,12 @@
         </div>
 
         <div class="tag-strip" aria-label="Tags">
-          <span><Tags size={13} /> focus</span>
-          <span>clean</span>
-          <span>library-core</span>
+          <Chip type="button">
+            <Tags size={13} />
+            focus
+          </Chip>
+          <Chip type="button">clean</Chip>
+          <Chip type="button">library-core</Chip>
         </div>
 
         <section class="audit-list" aria-label="Audit summary">
@@ -380,11 +413,11 @@
   </main>
 
   <aside class="right-rail" aria-label="Plugin activity">
-    <section class="rail-panel now-playing">
-      <div class="rail-heading">
-        <h2>Now Playing</h2>
+    <Section class="rail-panel now-playing" title="Now Playing" variant="panel">
+      {#snippet headerActions()}
         <Headphones size={15} />
-      </div>
+      {/snippet}
+
       <p>{selectedTrack?.artist}</p>
       <strong>{selectedTrack?.title}</strong>
       <div class="waveform" aria-hidden="true">
@@ -393,26 +426,29 @@
         {/each}
       </div>
       <div class="transport" aria-label="Playback controls">
-        <button aria-label="Shuffle" type="button"><Shuffle size={14} /></button
-        >
-        <button aria-label="Previous" type="button"
-          ><SkipBack size={15} /></button
-        >
-        <button class="play-button" aria-label="Pause" type="button"
-          ><Pause size={16} /></button
-        >
-        <button aria-label="Next" type="button"
-          ><SkipForward size={15} /></button
-        >
-        <button aria-label="Volume" type="button"><Volume2 size={14} /></button>
+        <IconButton aria-label="Shuffle" type="button" variant="control">
+          <Shuffle size={14} />
+        </IconButton>
+        <IconButton aria-label="Previous" type="button" variant="control">
+          <SkipBack size={15} />
+        </IconButton>
+        <IconButton aria-label="Pause" type="button" variant="control-primary">
+          <Pause size={16} />
+        </IconButton>
+        <IconButton aria-label="Next" type="button" variant="control">
+          <SkipForward size={15} />
+        </IconButton>
+        <IconButton aria-label="Volume" type="button" variant="control">
+          <Volume2 size={14} />
+        </IconButton>
       </div>
-    </section>
+    </Section>
 
-    <section class="rail-panel">
-      <div class="rail-heading">
-        <h2>Provider Queue</h2>
+    <Section class="rail-panel" title="Provider Queue" variant="panel">
+      {#snippet headerActions()}
         <Activity size={15} />
-      </div>
+      {/snippet}
+
       <div class="plugin-list">
         {#each pluginQueue as item}
           <div>
@@ -422,18 +458,18 @@
           </div>
         {/each}
       </div>
-    </section>
+    </Section>
 
-    <section class="rail-panel timeline">
-      <div class="rail-heading">
-        <h2>Today</h2>
+    <Section class="rail-panel timeline" title="Today" variant="panel">
+      {#snippet headerActions()}
         <Clock3 size={15} />
-      </div>
+      {/snippet}
+
       <ol>
         <li><span>09:18</span> Indexed local folder</li>
         <li><span>09:24</span> Matched 128 tracks</li>
         <li><span>09:31</span> Found 12 broken paths</li>
       </ol>
-    </section>
+    </Section>
   </aside>
 </div>

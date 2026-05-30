@@ -3,6 +3,8 @@ import type { HTMLAttributes } from "svelte/elements";
 
 export type TabsValue = string;
 
+export type TabsAppearance = "segmented";
+
 export type TabsItem = {
   disabled?: boolean;
   label: string;
@@ -14,6 +16,7 @@ export type TabsProps = Omit<
   "children" | "style"
 > & {
   activeValue?: TabsValue;
+  appearance?: TabsAppearance;
   items: TabsItem[];
   onValueChange?: (value: TabsValue) => void;
   panelId?: string;

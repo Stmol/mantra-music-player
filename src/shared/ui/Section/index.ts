@@ -1,2 +1,2 @@
 export { default as Section } from "./Section.svelte";
-export type { SectionProps } from "./types";
+export type { SectionProps, SectionVariant } from "./types";

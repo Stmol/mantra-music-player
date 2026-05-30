@@ -3,5 +3,6 @@ export type {
   IconButtonElement,
   IconButtonIcon,
   IconButtonProps,
+  IconButtonSize,
   IconButtonVariant,
 } from "./types";

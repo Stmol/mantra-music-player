@@ -1,2 +1,7 @@
 export { default as TextField } from "./TextField.svelte";
-export type { TextFieldProps, TextFieldSize, TextFieldTone } from "./types";
+export type {
+  TextFieldAppearance,
+  TextFieldProps,
+  TextFieldSize,
+  TextFieldTone,
+} from "./types";
