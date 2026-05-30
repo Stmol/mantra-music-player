@@ -200,23 +200,13 @@ input:focus-visible {
   background: var(--bg);
 }
 
-.sidebar,
 .workspace,
 .right-rail {
   min-height: 0;
 }
 
-.sidebar,
 .right-rail {
   background: var(--panel);
-}
-
-.sidebar {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-shell-gap);
-  padding: var(--space-shell-padding);
-  border-right: 1px solid var(--line);
 }
 
 .right-rail {
@@ -237,38 +227,22 @@ input:focus-visible {
   overflow: hidden;
 }
 
-.brand-block,
 .topbar,
 .panel-toolbar,
 .transport,
 .topbar-actions,
-.toolbar-tools,
-.source-list button,
-.playlist-list button {
+.toolbar-tools {
   display: flex;
   align-items: center;
 }
 
-.brand-block {
-  gap: var(--space-stack-md);
-  min-height: 44px;
-}
-
 .brand-mark,
-.source-icon,
 .cover,
 .inspector-cover {
   display: grid;
   place-items: center;
   border: 1px solid var(--line);
   background: var(--panel-muted);
-}
-
-.brand-mark {
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-md);
-  color: var(--accent-mint);
 }
 
 .eyebrow {
@@ -289,20 +263,8 @@ p {
   margin: 0;
 }
 
-.brand-block h1 {
-  margin-top: var(--space-1);
-  color: var(--type-app-title-color);
-  font-size: var(--type-app-title-size);
-  line-height: var(--type-app-title-line-height);
-  font-weight: var(--type-app-title-weight);
-  letter-spacing: var(--type-app-title-tracking);
-}
-
 .eyebrow,
-.source-count,
 .audit-list h3,
-.storage-card strong,
-.storage-card p,
 .status-grid span,
 .status-grid strong,
 .metadata-list span,
@@ -320,97 +282,9 @@ mark,
   font-family: var(--font-family-mono);
   font-variant-numeric: tabular-nums;
 }
-
-.source-list {
-  display: grid;
-  gap: var(--space-stack-xs);
-}
-
-.source-list button,
-.playlist-list button,
 .table-row {
   border: 0;
   cursor: pointer;
-}
-
-.source-list button {
-  width: 100%;
-  gap: var(--space-control-gap);
-  min-height: 38px;
-  padding: var(--space-control-padding-inline-tight)
-    var(--space-control-padding-inline-compact);
-  border-radius: var(--radius-md);
-  background: transparent;
-  color: var(--type-control-color);
-  font-size: var(--type-control-size);
-  line-height: var(--type-control-line-height);
-  font-weight: var(--type-control-weight);
-  text-align: left;
-}
-
-.source-list button:hover,
-.source-list button.active,
-.playlist-list button:hover {
-  background: var(--panel-muted);
-  color: var(--type-control-color-strong);
-}
-
-.source-list button.active {
-  box-shadow: inset 0 0 0 1px var(--line);
-}
-
-.source-icon {
-  width: 26px;
-  height: 26px;
-  border-radius: var(--radius-sm);
-}
-
-[data-accent="mint"] {
-  color: var(--accent-mint);
-}
-
-[data-accent="blue"] {
-  color: var(--accent-blue);
-}
-
-[data-accent="amber"] {
-  color: var(--accent-amber);
-}
-
-[data-accent="neutral"] {
-  color: var(--text-muted);
-}
-
-.source-count {
-  margin-left: auto;
-  color: var(--type-data-color);
-  font-size: var(--type-data-size);
-  line-height: var(--type-data-line-height);
-}
-
-.sidebar-section {
-  display: grid;
-}
-
-.playlist-list {
-  display: grid;
-  gap: var(--space-2);
-}
-
-.playlist-list button {
-  justify-content: space-between;
-  min-height: 29px;
-  padding: 0 var(--space-control-padding-inline-compact);
-  border-radius: var(--radius-sm);
-  background: transparent;
-  color: var(--type-control-color);
-  font-size: var(--type-control-size);
-  line-height: var(--type-control-line-height);
-  font-weight: var(--type-control-weight);
-}
-
-.playlist-list button span:last-child {
-  color: var(--type-data-color);
 }
 
 .storage-card,
@@ -420,50 +294,6 @@ mark,
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   background: var(--panel);
-}
-
-.storage-card {
-  display: grid;
-  gap: var(--space-stack-sm);
-  margin-top: auto;
-  padding: var(--space-panel-padding);
-}
-
-.storage-card > div:first-child {
-  display: flex;
-  gap: var(--space-stack-sm);
-  align-items: center;
-  color: var(--type-support-color);
-  font-size: var(--type-support-size);
-  line-height: var(--type-support-line-height);
-}
-
-.storage-card strong {
-  color: var(--type-section-title-color);
-  font-size: var(--type-section-title-size);
-  line-height: var(--type-section-title-line-height);
-  font-weight: var(--type-section-title-weight);
-  letter-spacing: var(--type-section-title-tracking);
-}
-
-.storage-card p {
-  color: var(--type-data-color);
-  font-size: var(--type-data-size);
-  line-height: var(--type-data-line-height);
-}
-
-.meter {
-  height: 6px;
-  overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: 99px;
-  background: var(--panel-muted);
-}
-
-.meter span {
-  display: block;
-  height: 100%;
-  background: var(--accent-mint);
 }
 
 .topbar {

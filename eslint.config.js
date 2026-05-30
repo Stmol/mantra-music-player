@@ -72,10 +72,8 @@ export default [
   },
   {
     files: [
-      "src/app/components/*/*.svelte",
-      "src/app/components/*/__tests__/*.test.ts",
-      "src/shared/ui/*/*.svelte",
-      "src/shared/ui/*/__tests__/*.test.ts",
+      "src/components/{shared,widgets}/**/*.svelte",
+      "src/components/{shared,widgets}/**/__tests__/*.test.ts",
     ],
     rules: {
       "unicorn/filename-case": [
@@ -108,16 +106,13 @@ export default [
             "KEBAB_CASE",
           "src/app/*.{ts,svelte,css}": "KEBAB_CASE",
           "src/app/{data,styles}/**/*.{ts,svelte,css}": "KEBAB_CASE",
-          "src/app/components/*/*.{ts,css}": "KEBAB_CASE",
-          "src/app/components/*/*.svelte": "PASCAL_CASE",
-          "src/app/components/*/__tests__/*.test.ts": "PASCAL_CASE",
+          "src/components/*.{ts,svelte,css}": "KEBAB_CASE",
+          "src/components/{shared,widgets}/**/*.svelte": "PASCAL_CASE",
+          "src/components/{shared,widgets}/**/*.{ts,css}": "KEBAB_CASE",
+          "src/components/{shared,widgets}/**/__tests__/*.test.ts":
+            "PASCAL_CASE",
           "src/shared/*.{ts,svelte,css}": "KEBAB_CASE",
-          "src/shared/!(ui)/**/*.{ts,svelte,css}": "KEBAB_CASE",
-          "src/shared/ui/*.ts": "KEBAB_CASE",
-          "src/shared/ui/*/*.{ts,css}": "KEBAB_CASE",
-          "src/shared/ui/*/*.svelte": "PASCAL_CASE",
-          "src/shared/ui/*/__tests__/*.test.ts": "PASCAL_CASE",
-          "src/shared/ui/**/*.css": "KEBAB_CASE",
+          "src/shared/**/*.{ts,svelte,css}": "KEBAB_CASE",
         },
         {
           ignoreMiddleExtensions: true,
@@ -128,11 +123,12 @@ export default [
         {
           "src/{entities,features,pages,widgets}/**/": "KEBAB_CASE",
           "src/app/{data,styles}/**/": "KEBAB_CASE",
-          "src/app/components/*/": "PASCAL_CASE",
-          "src/app/components/*/__tests__/": "KEBAB_CASE",
-          "src/shared/!(ui)/**/": "KEBAB_CASE",
-          "src/shared/ui/*/": "PASCAL_CASE",
-          "src/shared/ui/*/__tests__/": "KEBAB_CASE",
+          "src/components/{shared,widgets}/": "KEBAB_CASE",
+          "src/components/{shared,widgets}/*/": "PASCAL_CASE",
+          "src/components/{shared,widgets}/*/*/": "PASCAL_CASE",
+          "src/components/{shared,widgets}/*/__tests__/": "KEBAB_CASE",
+          "src/components/{shared,widgets}/*/*/__tests__/": "KEBAB_CASE",
+          "src/shared/**/": "KEBAB_CASE",
         },
       ],
     },
@@ -146,12 +142,15 @@ export default [
     },
   },
   {
-    files: [
-      "src/app/components/*/__tests__/*.test.ts",
-      "src/shared/ui/*/__tests__/*.test.ts",
-    ],
+    files: ["src/components/**/*"],
     rules: {
       "check-file/folder-naming-convention": "off",
+    },
+  },
+  {
+    files: ["src/components/{shared,widgets}/**/__tests__/*.test.ts"],
+    rules: {
+      "check-file/filename-naming-convention": "off",
     },
   },
 ];

@@ -2,10 +2,8 @@
   import {
     Activity,
     Album,
-    AudioLines,
     CircleDot,
     Clock3,
-    Database,
     Disc3,
     Download,
     FolderSync,
@@ -29,27 +27,38 @@
     Button,
     Chip,
     IconButton,
+    LibrarySidebar,
     Section,
     Tabs,
     TextField,
-  } from "../../shared/ui";
+    type LibrarySidebarPlaylist,
+    type LibrarySidebarSource,
+    type LibrarySidebarStorage,
+  } from "../../components";
   import type { UiDemoScreenProperties } from "./types";
 
   let { nextTheme, onToggleTheme }: UiDemoScreenProperties = $props();
 
-  const sources = [
+  const sources: LibrarySidebarSource[] = [
     { accent: "mint", count: "18.4K", icon: HardDrive, label: "Local Library" },
     { accent: "amber", count: "214", icon: Plug, label: "Providers" },
     { accent: "blue", count: "42", icon: FolderSync, label: "Imports" },
     { accent: "neutral", count: "8", icon: Wand2, label: "Rules" },
   ];
 
-  const playlists = [
+  const playlists: LibrarySidebarPlaylist[] = [
     { count: 128, label: "Inbox Review" },
     { count: 64, label: "Late Night Systems" },
     { count: 219, label: "Production Focus" },
     { count: 38, label: "Unmatched Metadata" },
   ];
+
+  const storage: LibrarySidebarStorage = {
+    description: "68% indexed, 2 sources pending",
+    label: "Archive",
+    progress: 68,
+    value: "482 GB",
+  };
 
   const tracks = [
     {
@@ -164,66 +173,13 @@
 </svelte:head>
 
 <div class="app-frame" data-density={compactRows ? "compact" : "comfortable"}>
-  <aside class="sidebar" aria-label="Library navigation">
-    <div class="brand-block">
-      <div class="brand-mark" aria-hidden="true">
-        <AudioLines size={18} strokeWidth={1.8} />
-      </div>
-      <div>
-        <p class="eyebrow">Mantra</p>
-        <h1>Library OS</h1>
-      </div>
-    </div>
-
-    <nav class="source-list" aria-label="Sources">
-      {#each sources as source}
-        {@const SourceIcon = source.icon}
-        <button
-          class:active={source.label === activeSource}
-          onclick={() => (activeSource = source.label)}
-          type="button"
-        >
-          <span class="source-icon" data-accent={source.accent}>
-            <SourceIcon size={16} strokeWidth={1.8} />
-          </span>
-          <span>{source.label}</span>
-          <span class="source-count">{source.count}</span>
-        </button>
-      {/each}
-    </nav>
-
-    <Section class="sidebar-section" title="Collections">
-      {#snippet headerActions()}
-        <IconButton
-          aria-label="Create collection"
-          size="sm"
-          variant="control"
-          type="button"
-        />
-      {/snippet}
-
-      <div class="playlist-list">
-        {#each playlists as playlist}
-          <button type="button">
-            <span>{playlist.label}</span>
-            <span>{playlist.count}</span>
-          </button>
-        {/each}
-      </div>
-    </Section>
-
-    <section class="storage-card" aria-label="Storage usage">
-      <div>
-        <Database size={16} strokeWidth={1.8} />
-        <span>Archive</span>
-      </div>
-      <strong>482 GB</strong>
-      <div class="meter" aria-hidden="true">
-        <span style="width: 68%"></span>
-      </div>
-      <p>68% indexed, 2 sources pending</p>
-    </section>
-  </aside>
+  <LibrarySidebar
+    {activeSource}
+    onSourceSelect={(label) => (activeSource = label)}
+    {playlists}
+    {sources}
+    {storage}
+  />
 
   <main class="workspace" aria-label="Music library workspace">
     <header class="topbar">

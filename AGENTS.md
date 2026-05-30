@@ -27,21 +27,24 @@ The frontend lives in `src` and must follow this structure:
 
 - `src/main.ts`: application bootstrap only.
 - `src/app`: root application shell, app-level providers, global styles, routing or layout when introduced.
-- `src/shared`: reusable code that is not tied to one feature, such as config, utilities, primitives, and shared types.
+- `src/components`: all Svelte component modules.
+- `src/components/shared`: reusable primitive and shared interface components.
+- `src/components/widgets`: composed UI blocks built from shared components and screen-level composition pieces.
+- `src/shared`: reusable non-component code that is not tied to one feature, such as config, utilities, and shared types.
 - `src/entities`: domain entities such as tracks, playlists, albums, artists, libraries, and providers.
 - `src/features`: user-facing feature modules such as playback controls, library import, search, and plugin management.
-- `src/widgets`: composed UI blocks made from entities and features.
+- `src/widgets`: non-component widget-layer modules if a widget needs support code outside its component module.
 - `src/pages`: top-level screens if page-level routing is introduced.
 
 Naming rules:
 
 - Frontend file and folder names must use kebab-case unless they are component modules covered by the PascalCase rule below.
-- Svelte component modules must live in a dedicated PascalCase directory with a PascalCase component file, colocated `types.ts`, `index.ts`, and `__tests__/<Component>.test.ts`. For example: `src/shared/ui/Button/Button.svelte`, `src/shared/ui/Button/types.ts`, `src/shared/ui/Button/index.ts`, and `src/shared/ui/Button/__tests__/Button.test.ts`.
-- Nested component parts must live under their parent component directory, for example `src/shared/ui/Button/ButtonLabel/ButtonLabel.svelte`.
+- Svelte component modules must live under `src/components/shared` or `src/components/widgets` in a dedicated PascalCase directory with a PascalCase component file, colocated `types.ts`, `index.ts`, and `__tests__/<Component>.test.ts`. For example: `src/components/shared/Button/Button.svelte`, `src/components/shared/Button/types.ts`, `src/components/shared/Button/index.ts`, and `src/components/shared/Button/__tests__/Button.test.ts`.
+- Nested component parts must live under their parent component directory, for example `src/components/widgets/NavList/NavListItem/NavListItem.svelte`.
 - TypeScript modules must use kebab-case filenames, for example `playlist-store.ts`.
 - Supporting modules in component directories, such as `index.ts` and `types.ts`, stay kebab-case or lowercase.
 - Type names, component exports, stores, and functions use normal TypeScript naming conventions inside files.
-- Cross-layer imports should move from generic to specific layers: `app` may import anything, `pages` may import widgets/features/entities/shared, `features` may import entities/shared, and `shared` must not import app-specific code.
+- Cross-layer imports should move from generic to specific layers: `app` may import anything, `pages` may import components/features/entities/shared, `components/widgets` may import `components/shared` and `shared`, `components/shared` may import `shared`, `features` may import entities/shared, and `shared` must not import app-specific code.
 
 ## TypeScript And Linting
 
