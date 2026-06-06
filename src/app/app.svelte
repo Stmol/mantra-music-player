@@ -2,6 +2,7 @@
   import { setTheme as setTauriTheme } from "@tauri-apps/api/app";
   import { getCurrentWindow } from "@tauri-apps/api/window";
   import { onMount } from "svelte";
+  import { TitleBar } from "../components";
   import { UiDemoScreen } from "../pages/ui-demo-screen";
   import type { DemoTheme } from "../pages/ui-demo-screen";
 
@@ -76,4 +77,9 @@
   });
 </script>
 
-<UiDemoScreen {nextTheme} onToggleTheme={toggleTheme} />
+<div class="app-shell">
+  <TitleBar {nextTheme} onToggleTheme={toggleTheme} />
+  <div class="app-shell__content">
+    <UiDemoScreen />
+  </div>
+</div>

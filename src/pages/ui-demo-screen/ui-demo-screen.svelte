@@ -5,16 +5,12 @@
     CircleDot,
     Clock3,
     Disc3,
-    Download,
     FolderSync,
     HardDrive,
     Headphones,
     ListFilter,
     Pause,
     Plug,
-    RotateCw,
-    Search,
-    Settings2,
     Shuffle,
     SkipBack,
     SkipForward,
@@ -24,20 +20,15 @@
     Wand2,
   } from "lucide-svelte";
   import {
-    Button,
     Chip,
     IconButton,
     LibrarySidebar,
     Section,
     Tabs,
-    TextField,
     type LibrarySidebarPlaylist,
     type LibrarySidebarSource,
     type LibrarySidebarStorage,
   } from "../../components";
-  import type { UiDemoScreenProperties } from "./types";
-
-  let { nextTheme, onToggleTheme }: UiDemoScreenProperties = $props();
 
   const sources: LibrarySidebarSource[] = [
     { accent: "mint", count: "18.4K", icon: HardDrive, label: "Local Library" },
@@ -182,43 +173,6 @@
   />
 
   <main class="workspace" aria-label="Music library workspace">
-    <header class="topbar">
-      <TextField
-        appearance="panel-header"
-        aria-label="Search music library"
-        class="topbar-search"
-        value="artist:glass tag:focus"
-      >
-        {#snippet leading()}
-          <Search size={17} strokeWidth={1.8} />
-        {/snippet}
-        {#snippet trailing()}
-          <kbd>CMD K</kbd>
-        {/snippet}
-      </TextField>
-
-      <div class="topbar-actions">
-        <Button type="button" variant="secondary">
-          {#snippet children()}
-            <RotateCw size={15} />
-            Sync
-          {/snippet}
-        </Button>
-        <Button onclick={onToggleTheme} type="button" variant="secondary">
-          {#snippet children()}
-            <Settings2 size={15} />
-            {nextTheme}
-          {/snippet}
-        </Button>
-        <Button type="button" variant="primary">
-          {#snippet children()}
-            <Download size={15} />
-            Import
-          {/snippet}
-        </Button>
-      </div>
-    </header>
-
     <section class="library-header" aria-labelledby="library-title">
       <div>
         <p class="eyebrow">Cross-provider library</p>
