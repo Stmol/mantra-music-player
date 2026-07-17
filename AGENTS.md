@@ -2,78 +2,116 @@
 
 ## Project Overview
 
-Mantra Music Player is a plugin-first cross-platform desktop music player.
+Mantra Music Player is a plugin-first cross-platform desktop music player
+built with the Native SDK. The current tree is a zero-config bootstrap:
+TypeScript app core + Native markup view, no Zig sources, no WebView shell.
 
 ## Technology Stack
 
-- Desktop shell: Tauri 2
-- Native layer: Rust
-- Frontend: Svelte 5
-- Frontend language: TypeScript
-- Build tool: Vite
-- Package manager: Bun
+- Desktop toolkit: Native SDK (`@native-sdk/cli`, currently 0.5.x)
+- App core: TypeScript in the `@native-sdk/core` subset (AOT-compiled to Zig)
+- UI: Native markup (`.native`), drawn by the Native SDK engine
+- Native toolchain: Zig 0.16.0
+- Build/dev/test: `native` CLI verbs (zero-config; no checked-in `build.zig`)
+
+Do not reintroduce Tauri, Rust shells, Svelte/Vite frontends, Bun, or WebView
+scaffolds unless the product direction explicitly changes.
 
 ## Architecture
 
-- The Svelte frontend owns the desktop user interface.
-- The Tauri/Rust layer owns native desktop integration, filesystem access, app lifecycle, and future performance-sensitive work.
-- The future plugin platform should expose a TypeScript SDK for music providers, metadata providers, local library integrations, and controlled UI extension points.
-- Keep the baseline application lightweight. Do not add heavy UI kits or large runtime dependencies without explicit discussion.
-- Future long lists, such as tracks, albums, and playlists, must be virtualized instead of rendered fully into the DOM.
+- `src/core.ts` owns application state and behavior: `Model`, `Msg`,
+  `initialModel`, `update`, optional `subscriptions`, and pure helpers.
+- `src/app.native` owns the declarative UI. Markup binds model fields and
+  helpers by name and dispatches messages; it never mutates state.
+- `app.zon` owns identity, windows/shell views, permissions, capabilities,
+  security policy, and packaging inputs.
+- The Native SDK runtime owns the event loop, GPU surface, automation server,
+  and platform services.
+- Keep the baseline application lightweight. Prefer Native SDK widgets and
+  virtualized lists for long catalogs (tracks, albums, playlists).
+- Future plugin work should stay compatible with the TypeScript app-core
+  boundary and Native SDK capabilities; do not invent a parallel web runtime
+  inside the shipping binary.
 
-## Frontend Structure
+Useful SDK reference shape for music-player UI and audio: the
+`examples/soundboard-ts` app in the Native SDK repository.
 
-The frontend lives in `src` and must follow this structure:
+## Project Structure
 
-- `src/main.ts`: application bootstrap only.
-- `src/app`: root application shell, app-level providers, global styles, routing or layout when introduced.
-- `src/shared`: reusable code that is not tied to one feature, such as config, utilities, primitives, and shared types.
-- `src/entities`: domain entities such as tracks, playlists, albums, artists, libraries, and providers.
-- `src/features`: user-facing feature modules such as playback controls, library import, search, and plugin management.
-- `src/widgets`: composed UI blocks made from entities and features.
-- `src/pages`: top-level screens if page-level routing is introduced.
+- `app.zon`: manifest (identity, shell windows, permissions, security).
+- `src/core.ts`: app core entry (may import sibling modules under `src/`).
+- `src/app.native`: primary markup view.
+- `assets/`: icons and packaged assets referenced from `app.zon`.
+- `package.json` / `tsconfig.json`: editor and versioning surface for
+  `@native-sdk/core` IntelliSense only. Builds never require reading them;
+  `npm install` is optional because the CLI materializes the package.
+- `.native/`, `zig-out/`, `.zig-cache/`: generated/build output (gitignored).
 
 Naming rules:
 
-- Frontend file and folder names must use kebab-case.
-- Svelte components must use kebab-case filenames, for example `track-list.svelte`.
-- TypeScript modules must use kebab-case filenames, for example `playlist-store.ts`.
-- Type names, component exports, stores, and functions use normal TypeScript naming conventions inside files.
-- Cross-layer imports should move from generic to specific layers: `app` may import anything, `pages` may import widgets/features/entities/shared, `features` may import entities/shared, and `shared` must not import app-specific code.
+- Prefer kebab-case for new file and folder names under `src/` when splitting
+  the core into modules (for example `playback-store.ts`).
+- Type names, exported helpers, `Msg` kinds, and model fields use normal
+  TypeScript naming. Markup binds those names verbatim
+  (`tickCount` → `{tickCount}`).
+- Keep all project artifacts in English (comments, docs, UI labels,
+  configuration descriptions). Localization may arrive later through a
+  dedicated layer; do not mix localized strings into source before that.
 
-## TypeScript And Linting
+## Native SDK Skills
 
-- Keep TypeScript strict mode enabled.
-- Do not weaken `tsconfig.json` or ESLint rules without explicit discussion.
-- Avoid `any`, non-null assertions, implicit fallthrough, and unchecked indexed access.
-- Prefer explicit domain types at boundaries and inferred types inside small local expressions.
-- Run `bun run verify` after changes.
+Agents must not rely on general model knowledge of the Native SDK. Load
+version-matched skills from the installed CLI before implementing or
+explaining changes:
 
-## Environment Variables
+```sh
+native skills list
+native skills get core --full
+native skills get native-ui
+native skills get ts-core
+native skills get automation
+native skills get zig
+```
 
-- Frontend environment variables are build-time values handled by Vite.
-- Only variables prefixed with `VITE_MANTRA_` may be used by Mantra frontend code.
-- Frontend environment variables must be read through `src/shared/config/environment.ts`, not directly throughout the app.
-- Never put secrets, API tokens, refresh tokens, or private keys in `VITE_*` variables because they are bundled into frontend assets.
-- Tauri exposes `TAURI_ENV_*` values to build hooks; these are allowed for platform-aware builds and diagnostics, not for secrets.
-- Runtime user settings should be stored through the future app configuration layer, not through environment variables.
+Skill router:
 
-## Language Rule
+- Orientation / project / packaging / bridge / security: `core` (`--full` for
+  implementation).
+- Markup views, bindings, Model/Msg/update wiring on UiApp: `native-ui`.
+- Writing or fixing `src/core.ts` and subset checker rules: `ts-core`.
+- Snapshots, readiness, smoke tests against a running window: `automation`.
+- Zig 0.16 std API compile failures: `zig`.
 
-All project artifacts must be written in English by default:
+Public overview: https://native-sdk.dev/skills
 
-- code comments
-- documentation files
-- Markdown files
-- UI labels and baseline interface text
-- configuration descriptions
+## TypeScript App Core Rules
 
-Interface localization may be added later through dedicated locale files. Do not mix localized UI strings into source code before the localization layer exists.
+- Stay inside the `@native-sdk/core` subset. No npm imports besides
+  `@native-sdk/core` (and its documented subpaths), no DOM/Node APIs, no
+  async/Promises, no regex, no `any`-driven escape hatches.
+- Keep `update` pure and synchronous. Effects are returned as `Cmd` data;
+  recurring work is declared via `subscriptions` / `Sub`.
+- Prefer explicit domain types at boundaries. Keep TypeScript `strict`
+  options aligned with the scaffolded `tsconfig.json`.
+- Do not add a second source of truth such as `src/main.zig` beside
+  `src/core.ts` (that combination is a teaching error).
 
 ## Agent Workflow
 
 - Use fish shell for local commands.
 - Do not commit files unless the user explicitly asks for a commit.
-- Prefer small, focused changes that preserve the existing architecture.
-- After completing a task, run `bun run verify`.
-- If `bun run verify` cannot be run or fails for an environment reason, report the exact reason and the command output summary.
+- Prefer small, focused changes that preserve the zero-config layout.
+- Before calling work done, run:
+
+```sh
+native check
+```
+
+- For behavior changes that can be exercised without a window, also use
+  `native dev --core`. For GUI verification, use `native dev` and the
+  automation skill when appropriate.
+- If Zig is missing or `native doctor` fails for an environment reason,
+  report the exact reason and command output summary.
+- Run BOTH build and test when touching ejected Zig/`build.zig` trees later:
+  `native build` and `native test` (or the equivalent `zig build` steps after
+  eject). Lazy analysis can hide breakage if only one path is exercised.
